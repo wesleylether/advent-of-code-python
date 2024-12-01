@@ -26,6 +26,8 @@ timer.start_timer()
 
 # Start coding here
 # ==========================================================================
+p1 = 0
+p2 = 0
 print(input_file)
 
 
@@ -33,8 +35,8 @@ print(input_file)
 
 # Print the answers here
 # ==========================================================================
-answer_part_one("PART 1")
-answer_part_two("PART 2")
+answer_part_one(p1)
+answer_part_two(p2)
 
 # End of Code
 # ==========================================================================

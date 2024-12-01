@@ -12,8 +12,8 @@ timer.start_timer()
 
 # Start coding here
 # ==========================================================================
-PART_1 = 0
-PART_2 = 0
+p1 = 0
+p2 = 0
 for line in input_file.split():
     numbers = re.match(r"(\d+)x(\d+)x(\d+)", line.strip())
     l, w, h = int(numbers.group(1)), int(numbers.group(2)), int(numbers.group(3))
@@ -22,17 +22,17 @@ for line in input_file.split():
     lh = l * h
     wh = w * h
 
-    PART_1 += 2 * (lw + lh + wh) + min(lw, lh, wh)
+    p1 += 2 * (lw + lh + wh) + min(lw, lh, wh)
 
     sides = [l, w, h]
     sides.sort()
-    PART_2 += 2 * (sides[0] + sides[1]) + l * w * h
+    p2 += 2 * (sides[0] + sides[1]) + l * w * h
 
 
 # Print the answers here
 # ==========================================================================
-answer_part_one(PART_1)
-answer_part_two(PART_2)
+answer_part_one(p1)
+answer_part_two(p2)
 
 # End of Code
 # ==========================================================================

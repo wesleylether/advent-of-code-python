@@ -12,18 +12,18 @@ timer.start_timer()
 
 # Start coding here
 # ==========================================================================
-PART_1 = 0
-PART_2 = 0
+p1 = 0
+p2 = 0
 for index, char in enumerate(input_file):
-    PART_1 += 1 if char == "(" else -1
+    p1 += 1 if char == "(" else -1
 
-    if PART_1 == -1 and PART_2 == 0:
-        PART_2 = index + 1
+    if p1 == -1 and p2 == 0:
+        p2 = index + 1
 
 # Print the answers here
 # ==========================================================================
-answer_part_one(PART_1)
-answer_part_two(PART_2)
+answer_part_one(p1)
+answer_part_two(p2)
 
 # End of Code
 # ==========================================================================

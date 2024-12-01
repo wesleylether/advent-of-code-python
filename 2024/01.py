@@ -7,8 +7,8 @@ timer.start_timer()
 # Start coding here
 # ==========================================================================
 lines = input_file.split("\n")
-PART_1 = 0
-PART_2 = 0
+p1 = 0
+p2 = 0
 LEFT = []
 RIGHT = []
 for line in lines:
@@ -20,13 +20,13 @@ LEFT.sort()
 RIGHT.sort()
 
 for i in range(len(LEFT)):
-    PART_1 += abs(LEFT[i] - RIGHT[i])
-    PART_2 += LEFT[i] * RIGHT.count(LEFT[i])
+    p1 += abs(LEFT[i] - RIGHT[i])
+    p2 += LEFT[i] * RIGHT.count(LEFT[i])
 
 # Print the answers here
 # ==========================================================================
-answer_part_one(PART_1)
-answer_part_two(PART_2)
+answer_part_one(p1)
+answer_part_two(p2)
 
 # End of Code
 # ==========================================================================
