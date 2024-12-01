@@ -60,4 +60,8 @@ class Timer:
 
         end_time = time.time_ns()
         duration = end_time - self.start_time
-        print(f"Time: {duration / 1_000_000.0}ms")
+
+        if duration < 1_000_000:
+            print(f"Time: {duration / 1_000}µs")
+        else:
+            print(f"Time: {duration / 1_000_000.0}ms")
