@@ -1,9 +1,3 @@
-import re
-import time
-from collections import defaultdict, Counter, deque
-from copy import deepcopy
-from math import gcd
-
 from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
 
 timer = Timer()
@@ -12,13 +6,22 @@ timer.start_timer()
 
 # Start coding here
 # ==========================================================================
+lines = input_file.split("\n")
 PART_1 = 0
 PART_2 = 0
-for index, char in enumerate(input_file):
-    PART_1 += 1 if char == "(" else -1
+LEFT = []
+RIGHT = []
+for line in lines:
+    left, right = line.split()
+    LEFT.append(int(left))
+    RIGHT.append(int(right))
 
-    if PART_1 == -1 and PART_2 == 0:
-        PART_2 = index + 1
+LEFT.sort()
+RIGHT.sort()
+
+for i in range(len(LEFT)):
+    PART_1 += abs(LEFT[i] - RIGHT[i])
+    PART_2 += LEFT[i] * RIGHT.count(LEFT[i])
 
 # Print the answers here
 # ==========================================================================

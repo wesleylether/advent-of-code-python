@@ -18,19 +18,30 @@ from collections import defaultdict, Counter, deque
 from copy import deepcopy
 from math import gcd
 
-from modules.advent_of_code import get_input
+from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
 
-start_time = time.time_ns()
-
+timer = Timer()
 input_file = get_input()
+timer.start_timer()
+
+# Start coding here
+# ==========================================================================
 print(input_file)
 
-end_time = time.time_ns()
-duration = end_time - start_time
-print(f"Time: {duration / 1_000_000.0}ms")
-"""
 
-    with open(filename, 'w') as file:
+
+
+# Print the answers here
+# ==========================================================================
+answer_part_one("PART 1")
+answer_part_two("PART 2")
+
+# End of Code
+# ==========================================================================
+timer.end_timer()
+
+"""
+    with open(filename, "w") as file:
         file.write(stub_content)
 
     print(f"File {filename} created successfully.")
@@ -40,6 +51,4 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: create <year> <day>")
     else:
-        year = sys.argv[1]
-        day = int(sys.argv[2])
-        create_stub(year, day)
+        create_stub(int(sys.argv[1]), int(sys.argv[2]))

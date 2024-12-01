@@ -1,10 +1,21 @@
-from dotenv import load_dotenv
-import os
-import requests
-from pathlib import Path
 import inspect
+import os
+import time
+from pathlib import Path
+
+import requests
+from dotenv import load_dotenv
 
 load_dotenv()
+
+
+def answer_part_one(answer):
+    print(f"Part 1:\n{answer}\n")
+
+
+def answer_part_two(answer):
+    print(f"Part 2:\n{answer}\n")
+
 
 def get_input():
     caller_frame = inspect.stack()[1]
@@ -15,7 +26,6 @@ def get_input():
     day_file = caller_path.stem
 
     input_file = Path(f"../input/{year}/{day_file}.txt")
-
 
     if not input_file.exists():
         print(f"Inputbestand {input_file} bestaat niet. Downloaden...")
@@ -35,3 +45,19 @@ def get_input():
 
     with open(input_file, "r") as f:
         return f.read()
+
+
+class Timer:
+    def __init__(self):
+        self.start_time = None
+
+    def start_timer(self):
+        self.start_time = time.time_ns()
+
+    def end_timer(self):
+        if self.start_time is None:
+            return print("Timer is niet gestart")
+
+        end_time = time.time_ns()
+        duration = end_time - self.start_time
+        print(f"Time: {duration / 1_000_000.0}ms")
