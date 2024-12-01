@@ -62,6 +62,8 @@ class Timer:
         duration = end_time - self.start_time
 
         if duration < 1_000_000:
-            print(f"Time: {duration / 1_000}µs")
+            print(f"Time: {round(duration / 1_000, 3)}µs")
+        elif duration > 1_000_000_000:
+            print(f"Time: {round(duration / 1_000_000_000.0, 3)}s")
         else:
-            print(f"Time: {duration / 1_000_000.0}ms")
+            print(f"Time: {round(duration / 1_000_000.0, 3)}ms")
