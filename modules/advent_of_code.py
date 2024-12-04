@@ -1,5 +1,6 @@
 import inspect
 import os
+import pprint
 import time
 from pathlib import Path
 
@@ -15,6 +16,16 @@ def answer_part_one(answer):
 
 def answer_part_two(answer):
     print(f"Part 2:\n{answer}\n")
+
+
+def dd(*args):
+    print(*args)
+    exit()
+
+
+def ddd(*args):
+    pprint.pp(*args)
+    exit()
 
 
 def get_input():
