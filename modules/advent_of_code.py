@@ -28,7 +28,7 @@ def ddd(*args):
     exit()
 
 
-def get_input():
+def get_input(example=False):
     caller_frame = inspect.stack()[1]
     caller_file = caller_frame.filename
     caller_path = Path(caller_file).resolve()
@@ -36,7 +36,7 @@ def get_input():
     year = caller_path.parent.name
     day_file = caller_path.stem
 
-    input_file = Path(f"../input/{year}/{day_file}.txt")
+    input_file = Path(f"../input/{year}/{day_file}{"-example" if example else ""}.txt")
 
     if not input_file.exists():
         print(f"Inputbestand {input_file} bestaat niet. Downloaden...")

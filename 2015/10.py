@@ -1,10 +1,4 @@
-import re
-import time
-from collections import defaultdict, Counter, deque
-from copy import deepcopy
-from math import gcd
-
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input, ddd, dd
+from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
 
 timer = Timer()
 input_file = get_input()
@@ -36,5 +30,5 @@ timer.start_timer()
 p2 = input_file
 for _ in range(50):
     p2 = look_and_say(p2)
-answer_part_one(len(p2))
+answer_part_two(len(p2))
 timer.end_timer()
