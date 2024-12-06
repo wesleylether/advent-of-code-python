@@ -73,6 +73,23 @@ class Grid:
                     adjacent.append(self.grid[y + dy][x + dx])
         return adjacent
 
+    def search(self, value):
+        for y, row in enumerate(self.grid):
+            for x, cell in enumerate(row):
+                if cell == value:
+                    return x, y
+        return None
+
+    def search_all(self, value):
+        for y, row in enumerate(self.grid):
+            for x, cell in enumerate(row):
+                if cell == value:
+                    yield x, y
+        return None
+
+    def count(self, value):
+        return sum(1 for cell in self if cell == value)
+
     def count_value(self, value):
         return sum(1 for cell in self if cell == value)
 
