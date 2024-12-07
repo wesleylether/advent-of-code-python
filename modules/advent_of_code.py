@@ -18,6 +18,10 @@ def answer_part_two(answer):
     print(f"Part 2:\n{answer}\n")
 
 
+def pp(*args):
+    pprint.pp(*args)
+
+
 def dd(*args):
     print(*args)
     exit()
