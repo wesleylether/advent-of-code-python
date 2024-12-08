@@ -42,6 +42,7 @@ def calculate_happiness(people, happiness):
         max_happiness = max(max_happiness, current_happiness)
     return max_happiness
 
+
 p1 = calculate_happiness(people, happiness)
 
 for person in people:
