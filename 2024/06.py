@@ -1,7 +1,7 @@
 from enum import Enum
 
 from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
-from modules.grid import Grid
+from modules.grid import Grid, GridOrientation
 
 timer = Timer()
 input_file = get_input()
@@ -47,10 +47,12 @@ def get_next(current, direction):
 grid = Grid.from_string(input_file)
 direction = Direction.UP
 current = grid.search("^")
+visited = set()
 
 while True:
     try:
         grid[current] = "X"
+        visited.add(current)
 
         while grid[get_next(current, direction)] == "#":
             direction = get_direction(direction)
@@ -70,27 +72,35 @@ p2 = 0
 timer.start_timer()
 grid = Grid.from_string(input_file)
 start_position = grid.search("^")
+done = set()
+for v in visited:
+    for item, position in grid.get_neighbors(
+        v,
+        GridOrientation.Horizontal | GridOrientation.Vertical,
+    ):
+        if position in done:
+            continue
+        done.add(position)
 
-for position in grid:
-    current = start_position
-    direction = Direction.UP
-    seen = set()
-    if position == ".":
-        while True:
-            try:
-                if (current, direction) in seen:
-                    p2 += 1
+        current = start_position
+        direction = Direction.UP
+        seen = set()
+        if item == ".":
+            while True:
+                try:
+                    if (current, direction) in seen:
+                        p2 += 1
+                        break
+                    seen.add((current, direction))
+                    while (
+                        grid[get_next(current, direction)] == "#"
+                        or get_next(current, direction) == position
+                    ):
+                        direction = get_direction(direction)
+
+                    current = get_next(current, direction)
+                except IndexError:
                     break
-                seen.add((current, direction))
-                while (
-                    grid[get_next(current, direction)] == "#"
-                    or get_next(current, direction) == grid.current
-                ):
-                    direction = get_direction(direction)
-
-                current = get_next(current, direction)
-            except IndexError:
-                break
 
 answer_part_two(p2)
 timer.end_timer()

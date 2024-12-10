@@ -21,14 +21,12 @@ directions = {
 valid_range = ["M", "A", "S"]
 
 grid = Grid.from_string(input_file)
-for letter in grid:
-    current = grid.current
-
+for letter, position in grid:
     if letter == "X":
         for direction in directions.keys():
             for step in range(1, 4):
-                dx = directions[direction][0] * step + current[0]
-                dy = directions[direction][1] * step + current[1]
+                dx = directions[direction][0] * step + position[0]
+                dy = directions[direction][1] * step + position[1]
                 try:
                     next_letter = grid[dx, dy]
                 except IndexError:
@@ -46,15 +44,13 @@ timer.start_timer()
 
 p2 = 0
 grid = Grid.from_string(input_file)
-for letter in grid:
-    current = grid.current
-
+for letter, position in grid:
     if letter == "A":
         try:
-            top_left = grid[current[0] - 1, current[1] - 1]
-            top_right = grid[current[0] + 1, current[1] - 1]
-            bottom_left = grid[current[0] - 1, current[1] + 1]
-            bottom_right = grid[current[0] + 1, current[1] + 1]
+            top_left = grid[position[0] - 1, position[1] - 1]
+            top_right = grid[position[0] + 1, position[1] - 1]
+            bottom_left = grid[position[0] - 1, position[1] + 1]
+            bottom_right = grid[position[0] + 1, position[1] + 1]
         except IndexError:
             continue
 
