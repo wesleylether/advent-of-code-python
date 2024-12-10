@@ -10,7 +10,7 @@ timer.start_timer()
 # Start coding here
 # ==========================================================================
 directions = {}
-for direction in input_file.split("\n"):
+for direction in input_file.splitlines():
     match = re.match(r"(\w+) to (\w+) = (\d+)", direction)
     if match:
         start, end, distance = match.groups()

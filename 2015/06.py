@@ -11,7 +11,7 @@ timer.start_timer()
 # ==========================================================================
 g1 = Grid(1000, 1000, 0)
 g2 = Grid(1000, 1000, 0)
-for line in input_file.split("\n"):
+for line in input_file.splitlines():
     action = re.findall(r"toggle|turn on|turn off", line)[0]
     x1, y1, x2, y2 = map(int, re.findall(r"\d+", line))
 

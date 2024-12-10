@@ -19,7 +19,7 @@ p2 = 0
 people = set()
 happiness = defaultdict(dict)
 
-for line in input_file.split("\n"):
+for line in input_file.splitlines():
     data = re.findall(
         r"(\w+) would (gain|lose) (\d+) happiness units by sitting next to (\w+).", line
     )[0]

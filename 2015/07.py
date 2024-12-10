@@ -9,7 +9,7 @@ timer.start_timer()
 instructions = {}
 results = {}
 
-for command in input_file.split("\n"):
+for command in input_file.splitlines():
     signals, wire = command.split("->")
     instructions[wire.strip()] = signals.strip().split(" ")
 

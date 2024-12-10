@@ -55,7 +55,7 @@ def calculate_possibilities(numbers, operators=None):
 
 
 timer.start_timer()
-for row in input_file.split("\n"):
+for row in input_file.splitlines():
     result, numbers_string = row.split(": ")
     result = int(result)
     numbers = list(map(int, numbers_string.split()))
@@ -68,7 +68,7 @@ answer_part_one(p1)
 timer.end_timer()
 
 timer.start_timer()
-for row in input_file.split("\n"):
+for row in input_file.splitlines():
     result, numbers_string = row.split(": ")
     result = int(result)
     numbers = list(map(int, numbers_string.split()))

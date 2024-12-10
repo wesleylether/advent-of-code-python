@@ -8,7 +8,7 @@ timer.start_timer()
 # ==========================================================================
 p1 = 0
 p2 = 0
-for line in input_file.split("\n"):
+for line in input_file.splitlines():
     p1 += len(line) - len(eval(line))
     p2 += len(line.replace("\\", "\\\\").replace('"', '\\"')) - len(line) + 2
 

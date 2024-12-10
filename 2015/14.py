@@ -15,7 +15,7 @@ timer.start_timer()
 # ==========================================================================
 p1 = 0
 p2 = 0
-for line in input_file.split("\n"):
+for line in input_file.splitlines():
     speed, fly_time, rest_time = map(int, re.findall(r"\d+", line))
     total_time = 2503
     cycle_time = fly_time + rest_time
@@ -30,7 +30,7 @@ timer.end_timer()
 
 timer.start_timer()
 reindeer = {}
-for line in input_file.split("\n"):
+for line in input_file.splitlines():
     name = re.match(r"^(\w+)", line).group(1)
     speed, fly_time, rest_time = map(int, re.findall(r"\d+", line))
     reindeer[name] = {

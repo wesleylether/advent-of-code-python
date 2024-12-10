@@ -9,7 +9,7 @@ timer.start_timer()
 p1 = 0
 p2 = 0
 
-for report in input_file.split("\n"):
+for report in input_file.splitlines():
     numbers = [int(n) for n in report.split(" ")]
 
     def check_numbers(nums):

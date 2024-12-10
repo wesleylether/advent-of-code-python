@@ -18,7 +18,7 @@ timer.start_timer()
 # ==========================================================================
 p1 = 0
 p2 = 0
-data = input_file.split("\n")
+data = input_file.splitlines()
 
 
 class Properties(Enum):

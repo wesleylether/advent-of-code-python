@@ -6,7 +6,7 @@ timer.start_timer()
 
 # Start coding here
 # ==========================================================================
-lines = input_file.split("\n")
+lines = input_file.splitlines()
 p1 = 0
 p2 = 0
 LEFT = []

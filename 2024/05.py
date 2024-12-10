@@ -14,7 +14,7 @@ p2 = 0
 
 ordering = {}
 ordering_numbers, queues = input_file.split("\n\n")
-for order in [order.split("|") for order in ordering_numbers.split("\n")]:
+for order in [order.split("|") for order in ordering_numbers.splitlines()]:
     if order[0] not in ordering:
         ordering[order[0]] = []
 
@@ -30,7 +30,7 @@ def check_order(print_order) -> Optional[Tuple[int, int]]:
     return None
 
 
-queues = queues.split("\n")
+queues = queues.splitlines()
 for queue in queues:
     print_order = [int(x) for x in queue.split(",")]
 
