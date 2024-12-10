@@ -44,7 +44,7 @@ def get_next(current, direction):
     return current
 
 
-grid = Grid.with_string(input_file)
+grid = Grid.from_string(input_file)
 direction = Direction.UP
 current = grid.search("^")
 
@@ -68,7 +68,7 @@ print("\n")
 # ==========================================================================
 p2 = 0
 timer.start_timer()
-grid = Grid.with_string(input_file)
+grid = Grid.from_string(input_file)
 start_position = grid.search("^")
 
 for position in grid:

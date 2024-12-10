@@ -16,7 +16,7 @@ timer.start_timer()
 # ==========================================================================
 p1 = 0
 p2 = 0
-grid = Grid.with_string(input_file)
+grid = Grid.from_string(input_file)
 antenna_types = set()
 for antenna in grid:
     if antenna != ".":

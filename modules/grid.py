@@ -1,3 +1,23 @@
+from enum import Flag, auto
+
+from modules.enums import Orientation
+
+
+class GridOrientation(Flag):
+    Horizontal = auto()
+    Vertical = auto()
+    Diagonal = auto()
+
+    Up = auto()
+    Down = auto()
+    Left = auto()
+    Right = auto()
+    UpLeft = auto()
+    UpRight = auto()
+    DownLeft = auto()
+    DownRight = auto()
+
+
 class Grid:
     def __init__(self, width, height, default=None, overlap=False):
         self.width = width
@@ -8,7 +28,7 @@ class Grid:
         self.current = (0, 0)
 
     @classmethod
-    def with_string(cls, string):
+    def from_string(cls, string):
         lines = string.splitlines()
         height = len(lines)
         width = max(len(line) for line in lines)
@@ -53,25 +73,75 @@ class Grid:
         x, y = self.current
         return self.grid[y][x]
 
-    def get_neighbors(self, x, y):
-        neighbors = []
+    def get_neighbors(
+        self,
+        x,
+        y,
+        orientations: GridOrientation = GridOrientation.Horizontal
+        | GridOrientation.Vertical
+        | GridOrientation.Diagonal,
+    ):
+        neighbors = set()
         for dy in range(-1, 2):
             for dx in range(-1, 2):
                 if dx == 0 and dy == 0:
                     continue
-                if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
-                    neighbors.append((x + dx, y + dy))
+
+                if orientations & GridOrientation.Horizontal and dy == 0 and dx != 0:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.Vertical and dx == 0 and dy != 0:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.Diagonal and dx != 0 and dy != 0:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.Up and dy == -1 and dx == 0:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.Down and dy == 1 and dx == 0:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.Left and dx == -1 and dy == 0:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.Right and dx == 1 and dy == 0:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.UpLeft and dx == -1 and dy == -1:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.UpRight and dx == 1 and dy == -1:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.DownLeft and dx == -1 and dy == 1:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
+                if orientations & GridOrientation.DownRight and dx == 1 and dy == 1:
+                    if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
+                        neighbors.add(((x + dx, y + dy), self.grid[y + dy][x + dx]))
+
         return neighbors
 
-    def get_adjacent(self, x, y):
-        adjacent = []
-        for dy in range(-1, 2):
-            for dx in range(-1, 2):
-                if dx == 0 and dy == 0:
-                    continue
-                if 0 <= x + dx < self.width and 0 <= y + dy < self.height:
-                    adjacent.append(self.grid[y + dy][x + dx])
-        return adjacent
+    def get_adjacent(
+        self,
+        x,
+        y,
+        orientations: GridOrientation = GridOrientation.Horizontal
+        | GridOrientation.Vertical
+        | GridOrientation.Diagonal,
+    ):
+        return [item[1] for item in self.get_neighbors(x, y, orientations)]
 
     def search(self, value):
         for y, row in enumerate(self.grid):

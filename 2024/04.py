@@ -20,7 +20,7 @@ directions = {
 }
 valid_range = ["M", "A", "S"]
 
-grid = Grid.with_string(input_file)
+grid = Grid.from_string(input_file)
 for letter in grid:
     current = grid.current
 
@@ -45,7 +45,7 @@ timer.end_timer()
 timer.start_timer()
 
 p2 = 0
-grid = Grid.with_string(input_file)
+grid = Grid.from_string(input_file)
 for letter in grid:
     current = grid.current
 
