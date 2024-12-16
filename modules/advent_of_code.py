@@ -21,7 +21,7 @@ def solve_one(func, *args, **kwargs):
 
 def solve_two(func, *args, **kwargs):
     timer.start_timer()
-    print(Fore.WHITE + f"\nPart 2: " + Fore.GREEN + f"{func(*args, **kwargs)}" + Fore.RESET)
+    print(Fore.WHITE + f"Part 2: " + Fore.GREEN + f"{func(*args, **kwargs)}" + Fore.RESET)
     timer.end_timer()
 
 

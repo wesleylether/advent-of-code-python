@@ -41,3 +41,5 @@ class Timer:
                 + f"{round(duration / 1_000_000.0, 2)}ms"
                 + Fore.RESET
             )
+
+        print("\n")
