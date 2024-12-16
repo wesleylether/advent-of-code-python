@@ -1,37 +1,54 @@
 import re
 
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 from modules.grid import Grid
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-g1 = Grid(1000, 1000, 0)
-g2 = Grid(1000, 1000, 0)
-for line in input_file.splitlines():
-    action = re.findall(r"toggle|turn on|turn off", line)[0]
-    x1, y1, x2, y2 = map(int, re.findall(r"\d+", line))
+def parse_input():
+    data = []
+    for line in input_file.splitlines():
+        action = re.findall(r"toggle|turn on|turn off", line)[0]
+        x1, y1, x2, y2 = map(int, re.findall(r"\d+", line))
+        data.append((action, x1, y1, x2, y2))
 
-    for x in range(x1, x2 + 1):
-        for y in range(y1, y2 + 1):
-            if action == "toggle":
-                g1[x, y] = 1 if g1[x, y] == 0 else 0
-                g2[x, y] += 2
-            elif action == "turn on":
-                g1[x, y] = 1
-                g2[x, y] += 1
-            elif action == "turn off":
-                g1[x, y] = 0
-                g2[x, y] = max(0, g2[x, y] - 1)
+    return data
 
-# Print the answers here
+
+def part_one():
+    grid = Grid(1000, 1000, 0)
+    for action, x1, y1, x2, y2 in parse_input():
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                if action == "toggle":
+                    grid[x, y] = 1 if grid[x, y] == 0 else 0
+                elif action == "turn on":
+                    grid[x, y] = 1
+                elif action == "turn off":
+                    grid[x, y] = 0
+
+    return grid.count_value(1)
+
+
+def part_two():
+    grid = Grid(1000, 1000, 0)
+    for action, x1, y1, x2, y2 in parse_input():
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                if action == "toggle":
+                    grid[x, y] += 2
+                elif action == "turn on":
+                    grid[x, y] += 1
+                elif action == "turn off":
+                    grid[x, y] = max(0, grid[x, y] - 1)
+
+    return grid.sum_values()
+
+
+# Answers
 # ==========================================================================
-answer_part_one(g1.count_value(1))
-answer_part_two(g2.sum_values())
-
-# End of Code
-# ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

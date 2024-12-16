@@ -1,35 +1,28 @@
 import inspect
 import os
-import pprint
-import time
 from pathlib import Path
 
 import requests
+from colorama import Fore
 from dotenv import load_dotenv
+
+from modules.timer import Timer
 
 load_dotenv()
 
-
-def answer_part_one(answer):
-    print(f"Part 1:\n{answer}\n")
+timer = Timer()
 
 
-def answer_part_two(answer):
-    print(f"Part 2:\n{answer}\n")
+def solve_one(func, *args, **kwargs):
+    timer.start_timer()
+    print(Fore.WHITE + f"Part 1: " + Fore.GREEN + f"{func(*args, **kwargs)}" + Fore.RESET)
+    timer.end_timer()
 
 
-def pp(*args):
-    pprint.pp(*args)
-
-
-def dd(*args):
-    print(*args)
-    exit()
-
-
-def ddd(*args):
-    pprint.pp(*args)
-    exit()
+def solve_two(func, *args, **kwargs):
+    timer.start_timer()
+    print(Fore.WHITE + f"\nPart 2: " + Fore.GREEN + f"{func(*args, **kwargs)}" + Fore.RESET)
+    timer.end_timer()
 
 
 def get_input(example=False):
@@ -60,25 +53,3 @@ def get_input(example=False):
 
     with open(input_file, "r") as f:
         return f.read()
-
-
-class Timer:
-    def __init__(self):
-        self.start_time = None
-
-    def start_timer(self):
-        self.start_time = time.time_ns()
-
-    def end_timer(self):
-        if self.start_time is None:
-            return print("Timer is niet gestart")
-
-        end_time = time.time_ns()
-        duration = end_time - self.start_time
-
-        if duration < 1_000_000:
-            print(f"Time: {round(duration / 1_000, 3)}µs")
-        elif duration > 1_000_000_000:
-            print(f"Time: {round(duration / 1_000_000_000.0, 3)}s")
-        else:
-            print(f"Time: {round(duration / 1_000_000.0, 3)}ms")

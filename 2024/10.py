@@ -1,20 +1,18 @@
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
-from modules.grid import Grid, GridOrientation, GridValueType
+from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.grid import Grid, GridValueType, GridOrientation
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
+# todo: fix this mess to separate the two parts
 
 # Start coding here
 # ==========================================================================
-p1 = 0
-p2 = 0
 grid = Grid.from_string(input_file, GridValueType.Int)
-visited = set()
+count = 0
 
 
-def check_neighbours(level, position):
-    global p2
+def check_neighbours(visited, level, position):
+    global count
 
     for neighbour in grid.get_neighbors(
         position,
@@ -22,26 +20,35 @@ def check_neighbours(level, position):
     ):
         if level == 8 and neighbour[0] == 9:
             visited.add(neighbour[1])
-            p2 += 1
+            count += 1
             continue
 
         if level + 1 == neighbour[0]:
-            check_neighbours(neighbour[0], neighbour[1])
+            check_neighbours(visited, neighbour[0], neighbour[1])
 
 
-for item, position in grid:
-    if len(visited) > 0:
-        p1 += len(visited)
-        visited = set()
+def part_one():
+    count = 0
+    visited = set()
 
-    if item == 0:
-        check_neighbours(item, position)
+    for item, position in grid:
+        if len(visited) > 0:
+            count += len(visited)
+            visited = set()
 
-# Print the answers here
+        if item == 0:
+            check_neighbours(visited, item, position)
+
+    return count
+
+
+def part_two():
+    global count
+
+    return count
+
+
+# Answers
 # ==========================================================================
-answer_part_one(p1)
-answer_part_two(p2)
-
-# End of Code
-# ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

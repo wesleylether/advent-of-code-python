@@ -1,12 +1,14 @@
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
 
 
 # Start coding here
 # ==========================================================================
+def parse_input():
+    return input_file
+
+
 def look_and_say(sequence):
     result = ""
     i = 0
@@ -20,15 +22,21 @@ def look_and_say(sequence):
     return result
 
 
-p1 = input_file
-for _ in range(40):
-    p1 = look_and_say(p1)
-answer_part_one(len(p1))
-timer.end_timer()
+def part_one():
+    count = input_file
+    for _ in range(40):
+        count = look_and_say(count)
+    return len(count)
 
-timer.start_timer()
-p2 = input_file
-for _ in range(50):
-    p2 = look_and_say(p2)
-answer_part_two(len(p2))
-timer.end_timer()
+
+def part_two():
+    count = input_file
+    for _ in range(50):
+        count = look_and_say(count)
+    return len(count)
+
+
+# Answers
+# ==========================================================================
+solve_one(part_one)
+solve_two(part_two)

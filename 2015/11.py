@@ -1,18 +1,16 @@
 import re
-import time
-from collections import defaultdict, Counter, deque
-from copy import deepcopy
-from math import gcd
 
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
-password = get_input()
-timer.start_timer()
+input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
+def parse_input():
+    return input_file
+
+
 def check_password(password):
     if not re.search(
         r"(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)",
@@ -40,20 +38,23 @@ def increment_password(password):
     return "".join(password)
 
 
-while not check_password(password):
-    password = increment_password(password)
+def part_one():
+    password = parse_input()
+    while not check_password(password):
+        password = increment_password(password)
+
+    return password
 
 
-# Print the answers here
+def part_two():
+    password = increment_password(part_one())
+    while not check_password(password):
+        password = increment_password(password)
+
+    return password
+
+
+# Answers
 # ==========================================================================
-answer_part_one(password)
-
-password = increment_password(password)
-while not check_password(password):
-    password = increment_password(password)
-
-answer_part_two(password)
-
-# End of Code
-# ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

@@ -1,70 +1,69 @@
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.enums import Direction
 from modules.grid import Grid
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-p1 = 0
-directions = {
-    "right": (1, 0),
-    "left": (-1, 0),
-    "down": (0, 1),
-    "up": (0, -1),
-    "down-right": (1, 1),
-    "up-left": (-1, -1),
-    "up-right": (1, -1),
-    "down-left": (-1, 1),
-}
-valid_range = ["M", "A", "S"]
+def parse_input():
+    return Grid.from_string(input_file)
 
-grid = Grid.from_string(input_file)
-for letter, position in grid:
-    if letter == "X":
-        for direction in directions.keys():
-            for step in range(1, 4):
-                dx = directions[direction][0] * step + position[0]
-                dy = directions[direction][1] * step + position[1]
-                try:
-                    next_letter = grid[dx, dy]
-                except IndexError:
-                    break
 
-                if next_letter != valid_range[step - 1]:
-                    break
+def part_one():
+    count = 0
+    valid_range = ["M", "A", "S"]
+    grid = parse_input()
+    for letter, position in grid:
+        if letter == "X":
+            for direction in Direction:
+                for step in range(1, 4):
+                    dx = direction.value[0] * step + position[0]
+                    dy = direction.value[1] * step + position[1]
+                    try:
+                        next_letter = grid[dx, dy]
+                    except IndexError:
+                        break
 
-                if step == 3:
-                    p1 += 1
-answer_part_one(p1)
-timer.end_timer()
+                    if next_letter != valid_range[step - 1]:
+                        break
 
-timer.start_timer()
+                    if step == 3:
+                        count += 1
 
-p2 = 0
-grid = Grid.from_string(input_file)
-for letter, position in grid:
-    if letter == "A":
-        try:
-            top_left = grid[position[0] - 1, position[1] - 1]
-            top_right = grid[position[0] + 1, position[1] - 1]
-            bottom_left = grid[position[0] - 1, position[1] + 1]
-            bottom_right = grid[position[0] + 1, position[1] + 1]
-        except IndexError:
-            continue
+    return count
 
-        if top_left == bottom_left == "M" and top_right == bottom_right == "S":
-            p2 += 1
 
-        if top_left == bottom_left == "S" and top_right == bottom_right == "M":
-            p2 += 1
+def part_two():
+    count = 0
+    grid = parse_input()
+    for letter, position in grid:
+        if letter == "A":
+            try:
+                top_left = grid[position[0] - 1, position[1] - 1]
+                top_right = grid[position[0] + 1, position[1] - 1]
+                bottom_left = grid[position[0] - 1, position[1] + 1]
+                bottom_right = grid[position[0] + 1, position[1] + 1]
+            except IndexError:
+                continue
 
-        if top_left == top_right == "M" and bottom_left == bottom_right == "S":
-            p2 += 1
+            if top_left == bottom_left == "M" and top_right == bottom_right == "S":
+                count += 1
 
-        if top_left == top_right == "S" and bottom_left == bottom_right == "M":
-            p2 += 1
+            if top_left == bottom_left == "S" and top_right == bottom_right == "M":
+                count += 1
 
-answer_part_two(p2)
-timer.end_timer()
+            if top_left == top_right == "M" and bottom_left == bottom_right == "S":
+                count += 1
+
+            if top_left == top_right == "S" and bottom_left == bottom_right == "M":
+                count += 1
+
+    return count
+
+
+# Answers
+# ==========================================================================
+solve_one(part_one)
+solve_two(part_two)

@@ -1,14 +1,14 @@
 from itertools import product
 
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
 input_file = get_input()
+
 
 # Start coding here
 # ==========================================================================
-p1 = 0
-p2 = 0
+def parse_input():
+    return input_file.splitlines()
 
 
 def evaluate_expression(expression):
@@ -54,29 +54,35 @@ def calculate_possibilities(numbers, operators=None):
     return results
 
 
-timer.start_timer()
-for row in input_file.splitlines():
-    result, numbers_string = row.split(": ")
-    result = int(result)
-    numbers = list(map(int, numbers_string.split()))
+def part_one():
+    count = 0
+    for row in parse_input():
+        result, numbers_string = row.split(": ")
+        result = int(result)
+        numbers = list(map(int, numbers_string.split()))
 
-    r1 = calculate_possibilities(numbers)
-    if result in [r for _, r in r1]:
-        p1 += result
+        r1 = calculate_possibilities(numbers)
+        if result in [r for _, r in r1]:
+            count += result
 
-answer_part_one(p1)
-timer.end_timer()
+    return count
 
-timer.start_timer()
-for row in input_file.splitlines():
-    result, numbers_string = row.split(": ")
-    result = int(result)
-    numbers = list(map(int, numbers_string.split()))
 
-    timer.start_timer()
-    r2 = calculate_possibilities(numbers, ["||", "+", "*"])
-    if result in [r for _, r in r2]:
-        p2 += result
+def part_two():
+    count = 0
+    for row in parse_input():
+        result, numbers_string = row.split(": ")
+        result = int(result)
+        numbers = list(map(int, numbers_string.split()))
 
-answer_part_two(p2)
-timer.end_timer()
+        r2 = calculate_possibilities(numbers, ["||", "+", "*"])
+        if result in [r for _, r in r2]:
+            count += result
+
+    return count
+
+
+# Answers
+# ==========================================================================
+solve_one(part_one)
+solve_two(part_two)

@@ -1,50 +1,48 @@
 import json
 import re
-import time
-from collections import defaultdict, Counter, deque
-from copy import deepcopy
-from math import gcd
 
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input, pp, dd
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-p1 = 0
-p2 = 0
-
-for n in re.findall(r"-?\d+", input_file):
-    p1 += int(n)
+def parse_input():
+    return input_file
 
 
-def loop_json_items(data):
-    global p2
-    if isinstance(data, dict):
-        if "red" in data.values():
-            return
+def part_one():
+    count = 0
+    for n in re.findall(r"-?\d+", parse_input()):
+        count += int(n)
 
-        for key, value in data.items():
-            loop_json_items(value)
-    elif isinstance(data, list):
-        for item in data:
-            loop_json_items(item)
-    else:
-        try:
-            p2 += int(data)
-        except ValueError:
-            pass
+    return count
 
 
-loop_json_items(json.loads(input_file))
+def part_two():
+    def loop_json_items(data, count):
+        if isinstance(data, dict):
+            if "red" in data.values():
+                return count
 
-# Print the answers here
+            for key, value in data.items():
+                count = loop_json_items(value, count)
+        elif isinstance(data, list):
+            for item in data:
+                count = loop_json_items(item, count)
+        else:
+            try:
+                count += int(data)
+            except ValueError:
+                pass
+
+        return count
+
+    return loop_json_items(json.loads(parse_input()), 0)
+
+
+# Answers
 # ==========================================================================
-answer_part_one(p1)
-answer_part_two(p2)
-
-# End of Code
-# ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

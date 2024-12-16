@@ -1,3 +1,4 @@
+from copy import deepcopy
 from enum import Flag, auto, Enum
 
 
@@ -34,7 +35,7 @@ class Grid:
         self.height = height
         self.default = default
         self.overlap = overlap
-        self.grid = [[default for _ in range(width)] for _ in range(height)]
+        self.grid = [[deepcopy(default) for _ in range(width)] for _ in range(height)]
         self.current = (0, 0)
 
     @classmethod
@@ -67,11 +68,15 @@ class Grid:
             if x < 0 or y < 0 or x >= self.width or y >= self.height:
                 raise IndexError
 
-        return self.grid[y][x]
+        return self.grid[y % self.height][x % self.width]
 
     def __setitem__(self, key, value):
         x, y = key
-        self.grid[y][x] = value
+
+        if not self.overlap:
+            self.grid[y][x] = value
+        else:
+            self.grid[y % self.height][x % self.width] = value
 
     def __iter__(self):
         self.current = (-1, 0)
@@ -142,18 +147,37 @@ class Grid:
                     return x, y
         return None
 
+    def find(self, value):
+        return self.search(value)
+
     def search_all(self, value):
         for y, row in enumerate(self.grid):
             for x, cell in enumerate(row):
                 if cell == value:
                     yield x, y
-        return None
 
-    def count(self, value):
-        return sum(1 for cell in self if cell[0] == value)
+    def find_all(self, value):
+        return self.search_all(value)
 
     def count_value(self, value):
-        return sum(1 for cell in self if cell[0] == value)
+        count = 0
+        for row in self.grid:
+            for cell in row:
+                if cell == value:
+                    count += 1
+        return count
 
     def sum_values(self):
-        return sum(cell[0] for cell in self if cell is not None)
+        sum_value = 0
+        for row in self.grid:
+            for cell in row:
+                if cell is None:
+                    continue
+                sum_value += cell
+        return sum_value
+
+    def copy(self):
+        return deepcopy(self)
+
+    def print(self):
+        print(self)

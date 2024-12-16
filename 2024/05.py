@@ -1,27 +1,25 @@
 from typing import Optional, Tuple
 
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 from modules.list import swap_items
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-p1 = 0
-p2 = 0
+def parse_input():
+    ordering = {}
+    ordering_numbers, queues = input_file.split("\n\n")
+    for order in [order.split("|") for order in ordering_numbers.splitlines()]:
+        if order[0] not in ordering:
+            ordering[order[0]] = []
 
-ordering = {}
-ordering_numbers, queues = input_file.split("\n\n")
-for order in [order.split("|") for order in ordering_numbers.splitlines()]:
-    if order[0] not in ordering:
-        ordering[order[0]] = []
-
-    ordering[order[0]].append(int(order[1]))
+        ordering[order[0]].append(int(order[1]))
+    return ordering, queues
 
 
-def check_order(print_order) -> Optional[Tuple[int, int]]:
+def check_order(print_order, ordering) -> Optional[Tuple[int, int]]:
     for i, a in enumerate(print_order):
         for j, b in enumerate(print_order[i + 1 :]):
             if str(b) in ordering and a in ordering[str(b)]:
@@ -30,27 +28,44 @@ def check_order(print_order) -> Optional[Tuple[int, int]]:
     return None
 
 
-queues = queues.splitlines()
-for queue in queues:
-    print_order = [int(x) for x in queue.split(",")]
+def part_one():
+    count = 0
+    ordering, queues = parse_input()
 
-    result = check_order(print_order)
-    if result is None:
-        p1 += print_order[len(print_order) // 2]
-        continue
+    queues = queues.splitlines()
+    for queue in queues:
+        print_order = [int(x) for x in queue.split(",")]
 
-    while result is not None:
-        print_order = swap_items(print_order, result[0], result[1])
-        result = check_order(print_order)
+        result = check_order(print_order, ordering)
+        if result is None:
+            count += print_order[len(print_order) // 2]
+            continue
 
-    p2 += print_order[len(print_order) // 2]
+    return count
 
 
-# Print the answers here
+def part_two():
+    count = 0
+    ordering, queues = parse_input()
+
+    queues = queues.splitlines()
+    for queue in queues:
+        print_order = [int(x) for x in queue.split(",")]
+
+        result = check_order(print_order, ordering)
+        if result is None:
+            continue
+
+        while result is not None:
+            print_order = swap_items(print_order, result[0], result[1])
+            result = check_order(print_order, ordering)
+
+        count += print_order[len(print_order) // 2]
+
+    return count
+
+
+# Answers
 # ==========================================================================
-answer_part_one(p1)
-answer_part_two(p2)
-
-# End of Code
-# ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

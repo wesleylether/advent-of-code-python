@@ -1,29 +1,36 @@
 import hashlib
 
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-p1 = 1
+def parse_input():
+    return input_file
 
-while True:
-    hash_value = hashlib.md5(f"{input_file}{p1}".encode()).hexdigest()
-    if hash_value.startswith("00000"):
-        break
-    p1 += 1
-answer_part_one(p1)
-timer.end_timer()
 
-p2 = 0
-timer.start_timer()
-while True:
-    hash_value = hashlib.md5(f"{input_file}{p2}".encode()).hexdigest()
-    if hash_value.startswith("000000"):
-        break
-    p2 += 1
-answer_part_two(p2)
-timer.end_timer()
+def calculate_hash(value):
+    count = 0
+    while True:
+        hash_value = hashlib.md5(f"{input_file}{count}".encode()).hexdigest()
+        if hash_value.startswith(value):
+            break
+        count += 1
+
+    return count
+
+
+def part_one():
+    return calculate_hash("00000")
+
+
+def part_two():
+    return calculate_hash("000000")
+
+
+# Answers
+# ==========================================================================
+solve_one(part_one)
+solve_two(part_two)

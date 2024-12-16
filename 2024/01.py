@@ -1,33 +1,44 @@
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-lines = input_file.splitlines()
-p1 = 0
-p2 = 0
-LEFT = []
-RIGHT = []
-for line in lines:
-    left, right = line.split()
-    LEFT.append(int(left))
-    RIGHT.append(int(right))
+def parse_input():
+    l = []
+    r = []
+    for line in input_file.splitlines():
+        left, right = line.split()
+        l.append(int(left))
+        r.append(int(right))
 
-LEFT.sort()
-RIGHT.sort()
+    l.sort()
+    r.sort()
+    return l, r
 
-for i in range(len(LEFT)):
-    p1 += abs(LEFT[i] - RIGHT[i])
-    p2 += LEFT[i] * RIGHT.count(LEFT[i])
 
-# Print the answers here
+def part_one():
+    count = 0
+    l, r = parse_input()
+
+    for i in range(len(l)):
+        count += abs(l[i] - r[i])
+
+    return count
+
+
+def part_two():
+    count = 0
+    l, r = parse_input()
+
+    for i in range(len(l)):
+        count += l[i] * r.count(l[i])
+
+    return count
+
+
+# Answers
 # ==========================================================================
-answer_part_one(p1)
-answer_part_two(p2)
-
-# End of Code
-# ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

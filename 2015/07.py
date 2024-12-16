@@ -1,20 +1,22 @@
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from functools import lru_cache
 
-timer = Timer()
+from modules.advent_of_code import solve_one, solve_two, get_input
+
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-instructions = {}
-results = {}
+def parse_input():
+    data = {}
+    for command in input_file.splitlines():
+        signals, wire = command.split("->")
+        data[wire.strip()] = signals.strip().split(" ")
 
-for command in input_file.splitlines():
-    signals, wire = command.split("->")
-    instructions[wire.strip()] = signals.strip().split(" ")
+    return data
 
 
-def calculate(name):
+def calculate(name, instructions, results: dict):
     try:
         return int(name)
     except ValueError:
@@ -24,30 +26,41 @@ def calculate(name):
     if name not in results:
         signals = instructions[name]
         if len(signals) == 1:
-            result = calculate(signals[0])
+            result = calculate(signals[0], instructions, results)
         else:
             operation = signals[-2]
             if operation == "AND":
-                result = calculate(signals[0]) & calculate(signals[2])
+                result = calculate(signals[0], instructions, results) & calculate(
+                    signals[2], instructions, results
+                )
             elif operation == "OR":
-                result = calculate(signals[0]) | calculate(signals[2])
+                result = calculate(signals[0], instructions, results) | calculate(
+                    signals[2], instructions, results
+                )
             elif operation == "NOT":
-                result = ~calculate(signals[1]) & 0xFFFF
+                result = ~calculate(signals[1], instructions, results) & 0xFFFF
             elif operation == "RSHIFT":
-                result = calculate(signals[0]) >> calculate(signals[2])
+                result = calculate(signals[0], instructions, results) >> calculate(
+                    signals[2], instructions, results
+                )
             elif operation == "LSHIFT":
-                result = calculate(signals[0]) << calculate(signals[2])
+                result = calculate(signals[0], instructions, results) << calculate(
+                    signals[2], instructions, results
+                )
         results[name] = result
     return results[name]
 
 
-# Print the answers here
-# ==========================================================================
-p1 = calculate("a")
-answer_part_one(p1)
-results = {"b": p1}
-answer_part_two(calculate("a"))
+@lru_cache(None)
+def part_one():
+    return calculate("a", parse_input(), {})
 
-# End of Code
+
+def part_two():
+    return calculate("a", parse_input(), {"b": part_one()})
+
+
+# Answers
 # ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

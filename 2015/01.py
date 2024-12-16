@@ -1,24 +1,34 @@
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
+
 
 # Start coding here
 # ==========================================================================
-p1 = 0
-p2 = 0
-for index, char in enumerate(input_file):
-    p1 += 1 if char == "(" else -1
+def parse_input():
+    return enumerate(input_file)
 
-    if p1 == -1 and p2 == 0:
-        p2 = index + 1
 
-# Print the answers here
+def part_one():
+    count = 0
+    for i, char in parse_input():
+        count += 1 if char == "(" else -1
+
+    return count
+
+
+def part_two():
+    count = {"a": 0, "b": 0}
+    for i, char in parse_input():
+        count["a"] += 1 if char == "(" else -1
+
+        if count["a"] == -1 and count["b"] == 0:
+            count["b"] = i + 1
+
+    return count["b"]
+
+
+# Answers
 # ==========================================================================
-answer_part_one(p1)
-answer_part_two(p2)
-
-# End of Code
-# ==========================================================================
-timer.end_timer()
+solve_one(part_one)
+solve_two(part_two)

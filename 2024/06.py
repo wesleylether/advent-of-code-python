@@ -1,107 +1,103 @@
-from enum import Enum
-
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.enums import Direction
 from modules.grid import Grid, GridOrientation
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
 
 
 # Start coding here
 # ==========================================================================
-class Direction(Enum):
-    UP = 0
-    RIGHT = 90
-    DOWN = 180
-    LEFT = 270
+def parse_input():
+    grid = Grid.from_string(input_file)
+    return grid, grid.search("^")
 
 
 def get_direction(direction):
     match direction:
-        case Direction.UP:
-            return Direction.RIGHT
-        case Direction.RIGHT:
-            return Direction.DOWN
-        case Direction.DOWN:
-            return Direction.LEFT
-        case Direction.LEFT:
-            return Direction.UP
+        case Direction.Up:
+            return Direction.Right
+        case Direction.Right:
+            return Direction.Down
+        case Direction.Down:
+            return Direction.Left
+        case Direction.Left:
+            return Direction.Up
 
     return direction
 
 
 def get_next(current, direction):
     match direction:
-        case Direction.UP:
+        case Direction.Up:
             return current[0], current[1] - 1
-        case Direction.RIGHT:
+        case Direction.Right:
             return current[0] + 1, current[1]
-        case Direction.DOWN:
+        case Direction.Down:
             return current[0], current[1] + 1
-        case Direction.LEFT:
+        case Direction.Left:
             return current[0] - 1, current[1]
     return current
 
 
-grid = Grid.from_string(input_file)
-direction = Direction.UP
-current = grid.search("^")
 visited = set()
 
-while True:
-    try:
-        grid[current] = "X"
-        visited.add(current)
 
-        while grid[get_next(current, direction)] == "#":
-            direction = get_direction(direction)
+def part_one():
+    grid, current = parse_input()
+    direction = Direction.Up
 
-        current = get_next(current, direction)
-    except IndexError:
-        break
+    while True:
+        try:
+            grid[current] = "X"
+            visited.add(current)
 
-answer_part_one(grid.count("X"))
-timer.end_timer()
-# print(grid)
-print("\n")
+            while grid[get_next(current, direction)] == "#":
+                direction = get_direction(direction)
 
-# Part two
-# ==========================================================================
-p2 = 0
-timer.start_timer()
-grid = Grid.from_string(input_file)
-start_position = grid.search("^")
-done = set()
-for v in visited:
-    for item, position in grid.get_neighbors(
-        v,
-        GridOrientation.Horizontal | GridOrientation.Vertical,
-    ):
-        if position in done:
-            continue
-        done.add(position)
+            current = get_next(current, direction)
+        except IndexError:
+            break
 
-        current = start_position
-        direction = Direction.UP
-        seen = set()
-        if item == ".":
-            while True:
-                try:
-                    if (current, direction) in seen:
-                        p2 += 1
+    return grid.count_value("X")
+
+
+def part_two():
+    count = 0
+    grid, start_position = parse_input()
+    done = set()
+    for v in visited:
+        for item, position in grid.get_neighbors(
+            v,
+            GridOrientation.Horizontal | GridOrientation.Vertical,
+        ):
+            if position in done:
+                continue
+            done.add(position)
+
+            current = start_position
+            direction = Direction.Up
+            seen = set()
+            if item == ".":
+                while True:
+                    try:
+                        if (current, direction) in seen:
+                            count += 1
+                            break
+                        seen.add((current, direction))
+                        while (
+                            grid[get_next(current, direction)] == "#"
+                            or get_next(current, direction) == position
+                        ):
+                            direction = get_direction(direction)
+
+                        current = get_next(current, direction)
+                    except IndexError:
                         break
-                    seen.add((current, direction))
-                    while (
-                        grid[get_next(current, direction)] == "#"
-                        or get_next(current, direction) == position
-                    ):
-                        direction = get_direction(direction)
 
-                    current = get_next(current, direction)
-                except IndexError:
-                    break
+    return count
 
-answer_part_two(p2)
-timer.end_timer()
-# print(grid)
+
+# Answers
+# ==========================================================================
+solve_one(part_one)
+solve_two(part_two)

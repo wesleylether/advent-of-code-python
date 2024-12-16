@@ -2,16 +2,14 @@ from collections import Counter, deque
 
 from toolz import pipe
 
-from modules.advent_of_code import Timer, answer_part_one, answer_part_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_input
 
-timer = Timer()
 input_file = get_input()
-timer.start_timer()
 
 
 # Start coding here
 # ==========================================================================
-def create_disk(input_file):
+def parse_input():
     disk = []
     index = 0
 
@@ -98,21 +96,23 @@ def get_checksum(disk):
     return result
 
 
-p1 = pipe(
-    input_file,
-    create_disk,
-    rearrange_disk,
-    get_checksum,
-)
-answer_part_one(p1)
-timer.end_timer()
+def part_one():
+    return pipe(
+        parse_input(),
+        rearrange_disk,
+        get_checksum,
+    )
 
-timer.start_timer()
-p2 = pipe(
-    input_file,
-    create_disk,
-    rearrange_disk_fragments,
-    get_checksum,
-)
-answer_part_two(p2)
-timer.end_timer()
+
+def part_two():
+    return pipe(
+        parse_input(),
+        rearrange_disk_fragments,
+        get_checksum,
+    )
+
+
+# Answers
+# ==========================================================================
+solve_one(part_one)
+solve_two(part_two)
