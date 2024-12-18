@@ -64,7 +64,8 @@ def part_two():
             robot["px"] = (robot["px"] + robot["vx"]) % w
             robot["py"] = (robot["py"] + robot["vy"]) % h
 
-        if count < 7000:
+        # To speed up the process
+        if count < 8100:
             continue
 
         def is_near(ra, rb):
