@@ -1,13 +1,9 @@
 import heapq
 import re
-import time
-from collections import defaultdict, Counter, deque, namedtuple
-from copy import deepcopy
-from math import gcd
+from collections import namedtuple
 
 from modules.advent_of_code import solve_one, solve_two, get_input
 from modules.grid import Grid
-from modules.helpers import dd, ddd, pp
 
 example = False
 W, H = (7, 7) if example else (71, 71)

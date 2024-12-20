@@ -99,7 +99,7 @@ class Grid:
             for x, cell in enumerate(row):
                 yield cell
 
-    def get_neighbors(
+    def neighbors(
         self,
         position,
         orientations: GridOrientation = GridOrientation.Horizontal
@@ -131,14 +131,14 @@ class Grid:
 
         return neighbors
 
-    def get_adjacent(
+    def adjacent(
         self,
         position,
         orientations: GridOrientation = GridOrientation.Horizontal
         | GridOrientation.Vertical
         | GridOrientation.Diagonal,
     ):
-        return [item[0] for item in self.get_neighbors(position, orientations)]
+        return [item[0] for item in self.neighbors(position, orientations)]
 
     def search(self, value):
         for y, row in enumerate(self.grid):

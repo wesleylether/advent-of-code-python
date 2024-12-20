@@ -29,9 +29,7 @@ def part_one():
             if pp in area:
                 continue
 
-            neighbors = grid.get_neighbors(
-                pp, GridOrientation.Horizontal | GridOrientation.Vertical
-            )
+            neighbors = grid.neighbors(pp, GridOrientation.Horizontal | GridOrientation.Vertical)
             perimeter += 4 - len(neighbors)
 
             for nv, np in neighbors:
@@ -63,9 +61,7 @@ def part_two():
             if pp in area:
                 continue
 
-            neighbors = grid.get_neighbors(
-                pp, GridOrientation.Horizontal | GridOrientation.Vertical
-            )
+            neighbors = grid.neighbors(pp, GridOrientation.Horizontal | GridOrientation.Vertical)
 
             for nv, np in neighbors:
                 if np not in area and nv == garden_plot:

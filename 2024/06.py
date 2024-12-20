@@ -66,7 +66,7 @@ def part_two():
     grid, start_position = parse_input()
     done = set()
     for v in visited:
-        for item, position in grid.get_neighbors(
+        for item, position in grid.neighbors(
             v,
             GridOrientation.Horizontal | GridOrientation.Vertical,
         ):

@@ -16,7 +16,7 @@ def part_one():
     for _ in range(100):
         new_grid = Grid(grid.width, grid.height, ".")
         for v, pos in grid:
-            neighbors = grid.get_adjacent(pos)
+            neighbors = grid.adjacent(pos)
             on = sum([1 for n in neighbors if n == "#"])
             if v == "#":
                 new_grid[pos] = "#" if on in [2, 3] else "."
@@ -46,7 +46,7 @@ def part_two():
                 new_grid[pos] = "#"
                 continue
 
-            neighbors = grid.get_adjacent(pos)
+            neighbors = grid.adjacent(pos)
             on = sum([1 for n in neighbors if n == "#"])
             if v == "#":
                 new_grid[pos] = "#" if on in [2, 3] else "."

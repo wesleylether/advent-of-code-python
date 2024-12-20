@@ -14,7 +14,7 @@ count = 0
 def check_neighbours(visited, level, position):
     global count
 
-    for neighbour in grid.get_neighbors(
+    for neighbour in grid.neighbors(
         position,
         GridOrientation.Horizontal | GridOrientation.Vertical,
     ):
