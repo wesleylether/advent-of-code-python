@@ -181,3 +181,7 @@ class Grid:
 
     def print(self):
         print(self)
+
+    def is_valid(self, position):
+        x, y = position
+        return 0 <= x < self.width and 0 <= y < self.height

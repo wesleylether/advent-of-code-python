@@ -1,4 +1,5 @@
 import pprint
+import re
 
 
 def pp(*args):
@@ -30,3 +31,7 @@ def generate_number_distributions(total, divisions):
     find_combinations([], list(possible_numbers))
 
     return sorted(combinations, key=lambda x: (sum(x), tuple(x)))
+
+
+def convert_to_int(value: str) -> int:
+    return int("".join(re.findall(r"\d", value)))
