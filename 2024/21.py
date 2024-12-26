@@ -1,14 +1,7 @@
-import re
-import time
-from collections import defaultdict, Counter, deque
-from copy import deepcopy
 from functools import lru_cache
-from itertools import permutations, chain
-from math import gcd
+from itertools import permutations
 
 from modules.advent_of_code import solve_one, solve_two, get_input
-from modules.grid import Grid
-from modules.helpers import dd, ddd, pp, convert_to_int
 
 input_file = get_input()
 
@@ -44,7 +37,7 @@ keypad = {
 
 
 @lru_cache(None)
-def path(sequence: str, depth=0, max_depth=2):
+def sequence(sequence: str, depth=0, max_depth=2):
     def visits(x, y, moves, hole):
         for m in moves:
             if (x, y) == hole:
@@ -79,17 +72,17 @@ def path(sequence: str, depth=0, max_depth=2):
         if depth == max_depth:
             out += len(options[0])
         else:
-            out += min(path(o, depth + 1, max_depth) for o in options)
+            out += min(sequence(o, depth + 1, max_depth) for o in options)
         x, y = tx, ty
     return out
 
 
 def part_one():
-    return sum(path(i) * int(i[:-1]) for i in parse_input())
+    return sum(sequence(i) * int(i[:-1]) for i in parse_input())
 
 
 def part_two():
-    return sum(path(i, max_depth=25) * int(i[:-1]) for i in parse_input())
+    return sum(sequence(i, max_depth=25) * int(i[:-1]) for i in parse_input())
 
 
 # Answers

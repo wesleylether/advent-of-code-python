@@ -6,34 +6,34 @@ input_file = get_input()
 # Start coding here
 # ==========================================================================
 def parse_input():
-    l = []
-    r = []
+    left = []
+    right = []
     for line in input_file.splitlines():
         left, right = line.split()
-        l.append(int(left))
-        r.append(int(right))
+        left.append(int(left))
+        right.append(int(right))
 
-    l.sort()
-    r.sort()
-    return l, r
+    left.sort()
+    right.sort()
+    return left, right
 
 
 def part_one():
     count = 0
-    l, r = parse_input()
+    left, right = parse_input()
 
-    for i in range(len(l)):
-        count += abs(l[i] - r[i])
+    for i in range(len(left)):
+        count += abs(left[i] - right[i])
 
     return count
 
 
 def part_two():
     count = 0
-    l, r = parse_input()
+    left, right = parse_input()
 
-    for i in range(len(l)):
-        count += l[i] * r.count(l[i])
+    for i in range(len(left)):
+        count += left[i] * right.count(left[i])
 
     return count
 

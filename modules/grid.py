@@ -140,6 +140,12 @@ class Grid:
     ):
         return [item[0] for item in self.neighbors(position, orientations)]
 
+    def rows(self):
+        return self.grid
+
+    def columns(self):
+        return [[row[i] for row in self.grid] for i in range(self.width)]
+
     def search(self, value):
         for y, row in enumerate(self.grid):
             for x, cell in enumerate(row):
