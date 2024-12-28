@@ -161,5 +161,7 @@ cython_debug/
 #.idea/
 
 # Project Specific
-input
-!input/.gitkeep
+input/*
+!input/**/*.yml
+!input/**/*.yaml
+input/**/*.txt
