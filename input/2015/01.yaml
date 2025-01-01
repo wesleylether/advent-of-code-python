@@ -1,0 +1,8 @@
+part_one:
+    -   data: &data |
+            a
+        answer: 0
+
+part_two:
+    -   data: *data
+        answer: 0
