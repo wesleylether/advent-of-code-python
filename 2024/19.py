@@ -1,14 +1,12 @@
 from functools import lru_cache
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    patterns_input, lines = input_file.split("\n\n")
+def parse(data):
+    patterns_input, lines = data.split("\n\n")
     patterns = patterns_input.split(", ")
     patterns = sorted(patterns, key=lambda x: (-len(x), x))
     return patterns, lines.splitlines()
@@ -27,8 +25,8 @@ def check_pattern(patterns: tuple[str, ...], line: str) -> int:
     return count
 
 
-def part_one():
-    patterns, lines = parse_input()
+def part_one(data):
+    patterns, lines = data
 
     count = 0
     for line in lines:
@@ -38,8 +36,8 @@ def part_one():
     return count
 
 
-def part_two():
-    patterns, lines = parse_input()
+def part_two(data):
+    patterns, lines = data
 
     count = 0
     for line in lines:
@@ -50,5 +48,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

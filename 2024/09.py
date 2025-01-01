@@ -2,18 +2,16 @@ from collections import Counter, deque
 
 from toolz import pipe
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data):
     disk = []
     index = 0
 
-    for i, n in enumerate(input_file):
+    for i, n in enumerate(data):
         if i % 2:
             for _ in range(int(n)):
                 disk.append(None)
@@ -96,17 +94,17 @@ def get_checksum(disk):
     return result
 
 
-def part_one():
+def part_one(data):
     return pipe(
-        parse_input(),
+        data,
         rearrange_disk,
         get_checksum,
     )
 
 
-def part_two():
+def part_two(data):
     return pipe(
-        parse_input(),
+        data,
         rearrange_disk_fragments,
         get_checksum,
     )
@@ -114,5 +112,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

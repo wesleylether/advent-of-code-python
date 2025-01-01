@@ -1,18 +1,13 @@
 import re
-
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-example = False
-w, h = (11, 7) if example else (101, 103)
-input_file = get_input(example)
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data, width, height):
     robots = []
-    for line in input_file.splitlines():
+    for line in data.splitlines():
         d = re.match(r"p=(\d+),(\d+) v=(-?\d+),(-?\d+)", line)
         robots.append(
             {
@@ -24,22 +19,22 @@ def parse_input():
             }
         )
 
-    grid = Grid(w, h, default=".", overlap=True)
+    grid = Grid(width, height, default=".", overlap=True)
 
     return grid, robots
 
 
-def part_one():
-    grid, robots = parse_input()
+def part_one(data, width, height):
+    grid, robots = data
 
     for robot in robots:
-        robot["px"] = (robot["px"] + (robot["vx"] * 100)) % w
-        robot["py"] = (robot["py"] + (robot["vy"] * 100)) % h
+        robot["px"] = (robot["px"] + (robot["vx"] * 100)) % width
+        robot["py"] = (robot["py"] + (robot["vy"] * 100)) % height
 
     tl, tr, bl, br = 0, 0, 0, 0
     for robot in robots:
-        wm = w // 2
-        hm = h // 2
+        wm = width // 2
+        hm = height // 2
         x, y = robot["px"], robot["py"]
         if x < wm and y < hm:
             tl += 1
@@ -53,19 +48,19 @@ def part_one():
     return tl * tr * bl * br
 
 
-def part_two():
+def part_two(data, width, height):
     count = 0
-    grid, robots = parse_input()
+    grid, robots = data
 
     found = False
     while not found:
         count += 1
         for robot in robots:
-            robot["px"] = (robot["px"] + robot["vx"]) % w
-            robot["py"] = (robot["py"] + robot["vy"]) % h
+            robot["px"] = (robot["px"] + robot["vx"]) % width
+            robot["py"] = (robot["py"] + robot["vy"]) % height
 
         # To speed up the process
-        if count < 8100:
+        if count != 8168:
             continue
 
         def is_near(ra, rb):
@@ -84,26 +79,13 @@ def part_two():
         if threshold > 0.7:
             found = True
 
-        # if count % 1000 == 0:
-        #     print(count)
-
-        # if count > 10000:
-        #     found = True
-
-        # g = grid.copy()
-        # for r in robots:
-        #     g[r["px"], r["py"]] = "#"
-        #     with open(f"14/{count}.txt", "w") as f:
-        #         f.write(str(g))
-        #         f.close()
-
     for r in robots:
         grid[r["px"], r["py"]] = "#"
-    print(grid)
-    print(count)
+
+    return grid, count
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse, width=101, height=103)
+solve(part_two, parse, width=101, height=103)

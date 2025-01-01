@@ -1,26 +1,25 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
+from modules.list import List
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    left = []
-    right = []
-    for line in input_file.splitlines():
-        left, right = line.split()
-        left.append(int(left))
-        right.append(int(right))
+def parse(data):
+    left = List()
+    right = List()
+    for line in data.splitlines():
+        l, r = line.split()
+        left.append(int(l))
+        right.append(int(r))
 
     left.sort()
     right.sort()
     return left, right
 
 
-def part_one():
+def part_one(data):
     count = 0
-    left, right = parse_input()
+    left, right = data
 
     for i in range(len(left)):
         count += abs(left[i] - right[i])
@@ -28,9 +27,9 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    left, right = parse_input()
+    left, right = data
 
     for i in range(len(left)):
         count += left[i] * right.count(left[i])
@@ -40,5 +39,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

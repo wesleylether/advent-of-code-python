@@ -18,28 +18,8 @@ class Timer:
         duration = end_time - self.start_time
 
         if duration < 1_000_000:
-            print(
-                Fore.WHITE
-                + f"Time: "
-                + Fore.CYAN
-                + f"{int(round(duration / 1_000, ndigits=0))}µs"
-                + Fore.RESET
-            )
+            return f"{int(round(duration / 1_000, ndigits=0))}µs"
         elif duration > 1_000_000_000:
-            print(
-                Fore.WHITE
-                + f"Time: "
-                + Fore.CYAN
-                + f"{round(duration / 1_000_000_000.0, 2)}s"
-                + Fore.RESET
-            )
+            return f"{round(duration / 1_000_000_000.0, 2)}s"
         else:
-            print(
-                Fore.WHITE
-                + f"Time: "
-                + Fore.CYAN
-                + f"{round(duration / 1_000_000.0, 2)}ms"
-                + Fore.RESET
-            )
-
-        print("\n")
+            return f"{round(duration / 1_000_000.0, 2)}ms"

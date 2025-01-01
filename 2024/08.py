@@ -1,13 +1,11 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    grid = Grid.from_string(input_file)
+def parse(data):
+    grid = Grid.from_string(data)
     antenna_types = set()
     for antenna, _ in grid:
         if antenna != ".":
@@ -16,9 +14,9 @@ def parse_input():
     return grid, antenna_types
 
 
-def part_one():
+def part_one(data):
     count = set()
-    grid, antenna_types = parse_input()
+    grid, antenna_types = data
 
     for antenna in antenna_types:
         antennas = list(grid.search_all(antenna))
@@ -47,9 +45,9 @@ def part_one():
     return len(count)
 
 
-def part_two():
+def part_two(data):
     count = set()
-    grid, antenna_types = parse_input()
+    grid, antenna_types = data
 
     for antenna in antenna_types:
         antennas = list(grid.search_all(antenna))
@@ -76,5 +74,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

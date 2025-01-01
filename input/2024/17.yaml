@@ -1,0 +1,12 @@
+part_one:
+    -   data: &data |
+            Register A: 729
+            Register B: 0
+            Register C: 0
+
+            Program: 0,1,5,4,3,0
+        answer: 4,6,3,5,6,3,5,2,1,0
+
+part_two:
+    -   data: *data
+        answer: 117440

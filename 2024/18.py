@@ -2,14 +2,8 @@ import heapq
 import re
 from collections import namedtuple
 
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-example = False
-W, H = (7, 7) if example else (71, 71)
-END = (W - 1, H - 1)
-B = 12 if example else 1024
-input_file = get_input(example)
 
 Direction = namedtuple("Direction", ["value"])
 Direction.Up = Direction((0, -1))
@@ -24,21 +18,20 @@ def heuristic(pos, end_pos):
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    data = [tuple(map(int, re.findall(r"\d+", line))) for line in input_file.splitlines()]
-
-    return data
+def parse(data, **_):
+    return [tuple(map(int, re.findall(r"\d+", line))) for line in data.splitlines()]
 
 
-def create_grid_with_data(data):
-    grid = Grid(W, H, ".")
+def create_grid_with_data(data, size):
+    w, h = size
+    grid = Grid(w, h, ".")
     for p in data:
         grid[p] = "#"
 
     return grid
 
 
-def calculate_path_cost(grid):
+def calculate_path_cost(grid, end):
     priority_queue = []
     g_costs = {(0, 0): 0}
     heapq.heappush(priority_queue, (0, 0, (0, 0), None, set()))
@@ -47,7 +40,7 @@ def calculate_path_cost(grid):
         _, g_cost, pos, direction, visited = heapq.heappop(priority_queue)
         x, y = pos
 
-        if pos == END:
+        if pos == end:
             return g_cost
 
         if pos in visited:
@@ -67,7 +60,7 @@ def calculate_path_cost(grid):
             try:
                 if grid[next_pos] != "#" and next_pos not in visited:
                     next_g_cost = g_cost + 1
-                    h_cost = heuristic(next_pos, END)
+                    h_cost = heuristic(next_pos, end)
                     f_cost = next_g_cost + h_cost
 
                     if next_pos not in g_costs or next_g_cost < g_costs[next_pos]:
@@ -80,27 +73,25 @@ def calculate_path_cost(grid):
                 pass
 
 
-def part_one():
-    data = parse_input()
-    grid = create_grid_with_data(data[:B])
+def part_one(data, width, height, byte_count):
+    grid = create_grid_with_data(data[:byte_count], (width, height))
 
-    return calculate_path_cost(grid)
+    return calculate_path_cost(grid, (width - 1, height - 1))
 
 
-def part_two():
-    data = parse_input()
-    grid = create_grid_with_data(data[:B])
+def part_two(data, width, height, byte_count):
+    grid = create_grid_with_data(data[:byte_count], (width, height))
 
-    for d in data[B:]:
+    for d in data[byte_count:]:
         grid[d] = "#"
 
-        if calculate_path_cost(grid) is None:
-            return d
+        if calculate_path_cost(grid, (width - 1, height - 1)) is None:
+            return ",".join(map(str, d))
 
     raise RuntimeError("No solution found")
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse, width=71, height=71, byte_count=1024)
+solve(part_two, parse, width=71, height=71, byte_count=1024)

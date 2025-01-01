@@ -2,9 +2,9 @@ import re
 from collections import defaultdict
 from itertools import permutations
 
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_data
 
-input_file = get_input()
+input_file = get_data()
 
 
 # Start coding here

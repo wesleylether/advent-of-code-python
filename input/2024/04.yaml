@@ -1,0 +1,17 @@
+part_one:
+    -   data: &data |
+            MMMSXXMASM
+            MSAMXMSMSA
+            AMXSXMAAMM
+            MSAMASMSMX
+            XMASAMXAMM
+            XXAMMXXAMA
+            SMSMSASXSS
+            SAXAMASAAA
+            MAMMMXMMMM
+            MXMXAXMASX
+        answer: 18
+
+part_two:
+    -   data: *data
+        answer: 9

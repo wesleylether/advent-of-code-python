@@ -1,0 +1,17 @@
+part_one:
+    -   data: &data |
+            r, wr, b, g, bwu, rb, gb, br
+
+            brwrr
+            bggr
+            gbbr
+            rrbgbr
+            ubwu
+            bwurrg
+            brgr
+            bbrgwb
+        answer: 6
+
+part_two:
+    -   data: *data
+        answer: 16

@@ -1,22 +1,20 @@
 from collections import defaultdict, deque
 
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.enums import Direction
 from modules.grid import Grid, GridOrientation
-
-input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return Grid.from_string(input_file)
+def parse(data):
+    return Grid.from_string(data)
 
 
-def part_one():
+def part_one(data):
     count = 0
     seen = set()
-    grid = parse_input()
+    grid = data
     for garden_plot, position in grid:
         if position in seen:
             continue
@@ -45,9 +43,9 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    grid = parse_input()
+    grid = data
     seen = set()
     for garden_plot, position in grid:
         if position in seen:
@@ -112,5 +110,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

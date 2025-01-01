@@ -1,17 +1,15 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return {v: 1 for v in input_file.split()}
+def parse(data):
+    return {v: 1 for v in data.split()}
 
 
-def count_stones(iterations):
+def count_stones(data, iterations):
     index = 0
-    values = parse_input()
+    values = data
     while index < iterations:
         index += 1
 
@@ -40,15 +38,15 @@ def count_stones(iterations):
     return sum(values.values())
 
 
-def part_one():
-    return count_stones(25)
+def part_one(data):
+    return count_stones(data, 25)
 
 
-def part_two():
-    return count_stones(75)
+def part_two(data):
+    return count_stones(data, 75)
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

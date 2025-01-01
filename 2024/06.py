@@ -1,14 +1,12 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.enums import Direction
 from modules.grid import Grid, GridOrientation
-
-input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    grid = Grid.from_string(input_file)
+def parse(data):
+    grid = Grid.from_string(data)
     return grid, grid.search("^")
 
 
@@ -42,8 +40,8 @@ def get_next(current, direction):
 visited = set()
 
 
-def part_one():
-    grid, current = parse_input()
+def part_one(data):
+    grid, current = data
     direction = Direction.Up
 
     while True:
@@ -61,9 +59,9 @@ def part_one():
     return grid.count_value("X")
 
 
-def part_two():
+def part_two(data):
     count = 0
-    grid, start_position = parse_input()
+    grid, start_position = data
     done = set()
     for v in visited:
         for item, position in grid.neighbors(
@@ -99,5 +97,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

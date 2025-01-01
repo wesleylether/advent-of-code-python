@@ -1,15 +1,13 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data):
     locks = []
     keys = []
-    for grid_input in input_file.split("\n\n"):
+    for grid_input in data.split("\n\n"):
         grid = Grid.from_string(grid_input)
         combination = [x.count("#") - 1 for x in grid.columns()]
         if grid[0, 0] == "#":
@@ -20,9 +18,9 @@ def parse_input():
     return locks, keys
 
 
-def part_one():
+def part_one(data):
     count = 0
-    locks, keys = parse_input()
+    locks, keys = data
     for lock_combination, _ in locks:
         for key_combination, _ in keys:
             fits = True
@@ -37,14 +35,6 @@ def part_one():
     return count
 
 
-def part_two():
-    count = 0
-    data = parse_input()
-
-    return count
-
-
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)

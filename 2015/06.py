@@ -1,9 +1,9 @@
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_data
 from modules.grid import Grid
 
-input_file = get_input()
+input_file = get_data()
 
 
 # Start coding here

@@ -3,10 +3,10 @@ from enum import Enum
 from functools import reduce
 from operator import mul
 
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve_one, solve_two, get_data
 from modules.helpers import generate_number_distributions
 
-input_file = get_input()
+input_file = get_data()
 
 
 # Start coding here

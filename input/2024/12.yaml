@@ -1,0 +1,25 @@
+part_one:
+    -   data: &data_small |
+            AAAA
+            BBCD
+            BBCC
+            EEEC
+        answer: 140
+    -   data: &data_big |
+            RRRRIICCFF
+            RRRRIICCCF
+            VVRRRCCFFF
+            VVRCCCJFFF
+            VVVVCJJCFE
+            VVIVCCJJEE
+            VVIIICJJEE
+            MIIIIIJJEE
+            MIIISIJEEE
+            MMMISSJEEE
+        answer: 1930
+
+part_two:
+    -   data: *data_small
+        answer: 80
+    -   data: *data_big
+        answer: 1206

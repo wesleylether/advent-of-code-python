@@ -1,17 +1,15 @@
 import heapq
 from collections import namedtuple
 
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid, GridOrientation
 from modules.helpers import dd
 
-input_file = get_input()
 
-
-# Start coding here
+# Start coding hier
 # ==========================================================================
-def parse_input():
-    grid = Grid.from_string(input_file)
+def parse(data, *_):
+    grid = Grid.from_string(data)
     start_position = grid.search("S")
     end_position = grid.search("E")
 
@@ -49,8 +47,8 @@ def path_score(grid, start, end):
     raise RuntimeError("No path found")
 
 
-def part_one():
-    grid, s, e = parse_input()
+def part_one(data, pico_seconds):
+    grid, s, e = data
     max_pico_points, default_path = path_score(grid, s, e)
     cheats = {}
 
@@ -68,13 +66,13 @@ def part_one():
             except IndexError:
                 continue
     sorted_cheats = sorted(cheats.items(), reverse=True)
-    filtered_cheats = dict(filter(lambda x: x[0] >= 100, sorted_cheats))
+    filtered_cheats = dict(filter(lambda x: x[0] >= pico_seconds, sorted_cheats))
 
     return sum(filtered_cheats.values())
 
 
-def part_two():
-    grid, s, e = parse_input()
+def part_two(data, pico_seconds):
+    grid, s, e = data
     max_pico_points, default_path = path_score(grid, s, e)
     cheats = 0
     visited_list = list(default_path.keys())
@@ -87,7 +85,7 @@ def part_two():
             distance = abs(x1 - x2) + abs(y1 - y2)
             if distance <= 20:
                 cost1, cost2 = costs_list[i], costs_list[j]
-                if cost2 - cost1 - distance >= 100:
+                if cost2 - cost1 - distance >= pico_seconds:
                     cheats += 1
 
     return cheats
@@ -95,5 +93,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse, 100)
+solve(part_two, parse, 100)

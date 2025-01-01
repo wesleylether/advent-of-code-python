@@ -1,14 +1,12 @@
 from itertools import product
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file.splitlines()
+def parse(data):
+    return data.splitlines()
 
 
 def evaluate_expression(expression):
@@ -54,9 +52,9 @@ def calculate_possibilities(numbers, operators=None):
     return results
 
 
-def part_one():
+def part_one(data):
     count = 0
-    for row in parse_input():
+    for row in data:
         result, numbers_string = row.split(": ")
         result = int(result)
         numbers = list(map(int, numbers_string.split()))
@@ -68,9 +66,9 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    for row in parse_input():
+    for row in data:
         result, numbers_string = row.split(": ")
         result = int(result)
         numbers = list(map(int, numbers_string.split()))
@@ -84,5 +82,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

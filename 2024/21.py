@@ -1,15 +1,13 @@
 from functools import lru_cache
 from itertools import permutations
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file.splitlines()
+def parse(data):
+    return data.splitlines()
 
 
 numpad = {
@@ -37,7 +35,7 @@ keypad = {
 
 
 @lru_cache(None)
-def sequence(sequence: str, depth=0, max_depth=2):
+def sequence(sequence_str: str, depth=0, max_depth=2):
     def visits(x, y, moves, hole):
         for m in moves:
             if (x, y) == hole:
@@ -66,7 +64,7 @@ def sequence(sequence: str, depth=0, max_depth=2):
         return numpad.get(value) if depth == 0 else keypad.get(value)
 
     x, y = get_from_depth("A")
-    for i in sequence:
+    for i in sequence_str:
         tx, ty = get_from_depth(i)
         options = move_options(x, y, tx, ty, get_from_depth("."))
         if depth == max_depth:
@@ -77,15 +75,15 @@ def sequence(sequence: str, depth=0, max_depth=2):
     return out
 
 
-def part_one():
-    return sum(sequence(i) * int(i[:-1]) for i in parse_input())
+def part_one(data):
+    return sum(sequence(i) * int(i[:-1]) for i in data)
 
 
-def part_two():
-    return sum(sequence(i, max_depth=25) * int(i[:-1]) for i in parse_input())
+def part_two(data):
+    return sum(sequence(i, max_depth=25) * int(i[:-1]) for i in data)
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

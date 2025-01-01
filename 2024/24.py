@@ -1,14 +1,13 @@
 from collections import deque
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
+from modules.helpers import dd
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    gates_input, connections_input = input_file.split("\n\n")
+def parse(data):
+    gates_input, connections_input = data.split("\n\n")
     gates = {}
     for line in gates_input.splitlines():
         gate, output = line.split(": ")
@@ -43,8 +42,8 @@ def evaluate(gates, connections):
     return wire_values
 
 
-def part_one():
-    gates, connections = parse_input()
+def part_one(data):
+    gates, connections = data
 
     wire_values = evaluate(gates, connections)
 
@@ -60,8 +59,8 @@ def part_one():
     return int(binary_number, 2)
 
 
-def part_two():
-    gates, connections = parse_input()
+def part_two(data):
+    gates, connections = data
 
     def make_gate(char, num):
         return char + str(num).rjust(2, "0")
@@ -164,10 +163,10 @@ def part_two():
             break
         swaps += [connection_a, connection_b]
 
-    print(",".join(sorted(swaps)))
+    return ",".join(sorted(swaps))
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

@@ -1,30 +1,26 @@
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    data = list()
-    for group in input_file.split("\n\n"):
+def parse(data):
+    parsed_data = []
+    for group in data.split("\n\n"):
         lines = group.splitlines()
-        data.append(
+        parsed_data.append(
             {
                 "A": tuple(int(n) for n in re.findall(r"(\d+)", lines[0])),
                 "B": tuple(int(n) for n in re.findall(r"(\d+)", lines[1])),
                 "P": tuple(int(n) for n in re.findall(r"(\d+)", lines[2])),
             }
         )
+    return parsed_data
 
-    return data
 
-
-def part_one():
+def part_one(data):
     count = 0
-    data = parse_input()
 
     for d in data:
         for a in range(1, 101):
@@ -38,9 +34,8 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    data = parse_input()
 
     for d in data:
         a1, a2 = d["A"]
@@ -64,5 +59,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

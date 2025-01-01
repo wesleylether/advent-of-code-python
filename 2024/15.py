@@ -1,21 +1,13 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    wherehouse, instructions = input_file.split("\n\n")
-    moves = []
-
-    for i in instructions.splitlines():
-        for j in i:
-            moves.append(j)
-
+def parse(data):
+    wherehouse, instructions = data.split("\n\n")
+    moves = [j for i in instructions.splitlines() for j in i]
     grid = Grid.from_string(wherehouse)
-
     return grid, moves
 
 
@@ -28,8 +20,8 @@ def get_direction(move):
     }[move]
 
 
-def part_one():
-    grid, moves = parse_input()
+def part_one(data):
+    grid, moves = data
     cx, cy = grid.search("@")
 
     for move in moves:
@@ -51,9 +43,7 @@ def part_one():
         grid[cx, cy] = "."
         cx, cy = nx, ny
 
-    grid.print()
-
-    return sum(list(map(lambda pos: 100 * pos[1] + pos[0], grid.search_all("O"))))
+    return grid, sum(list(map(lambda pos: 100 * pos[1] + pos[0], grid.search_all("O"))))
 
 
 def resize_grid(grid):
@@ -72,13 +62,12 @@ def resize_grid(grid):
     return new_grid
 
 
-def part_two():
-    grid, moves = parse_input()
+def part_two(data):
+    grid, moves = data
     grid = resize_grid(grid)
     cx, cy = grid.search("@")
 
     for move_index, move in enumerate(moves):
-        # print(f"Move: {move_index} | {move}")
         dx, dy = get_direction(move)
         nx, ny = cx + dx, cy + dy
 
@@ -201,13 +190,10 @@ def part_two():
         grid[cx, cy] = "."
         cx, cy = nx, ny
 
-        # grid.print()
-
-    grid.print()
-    return sum(list(map(lambda pos: 100 * pos[1] + pos[0], grid.search_all("["))))
+    return grid, sum(list(map(lambda pos: 100 * pos[1] + pos[0], grid.search_all("["))))
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

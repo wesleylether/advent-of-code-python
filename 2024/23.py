@@ -1,15 +1,13 @@
 from collections import defaultdict
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data):
     connected = defaultdict(list)
-    for line in input_file.splitlines():
+    for line in data.splitlines():
         computer1, computer2 = line.split("-")
         connected[computer1].append(computer2)
         connected[computer2].append(computer1)
@@ -17,9 +15,8 @@ def parse_input():
     return connected
 
 
-def part_one():
+def part_one(data):
     count = 0
-    data = parse_input()
 
     inter_connected = set()
     for computer, others in data.items():
@@ -33,9 +30,7 @@ def part_one():
     return count
 
 
-def part_two():
-    data = parse_input()
-
+def part_two(data):
     biggest_group = set()
     for computer, others in data.items():
         for other in others:
@@ -51,5 +46,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

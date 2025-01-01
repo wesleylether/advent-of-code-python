@@ -1,19 +1,15 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid, GridValueType, GridOrientation
 
-input_file = get_input()
-
-# todo: fix this mess to separate the two parts
 
 # Start coding here
 # ==========================================================================
-grid = Grid.from_string(input_file, GridValueType.Int)
-count = 0
+def parse(data):
+    return Grid.from_string(data, GridValueType.Int)
 
 
-def check_neighbours(visited, level, position):
-    global count
-
+def check_neighbours(grid, visited, level, position):
+    count = 0
     for neighbour in grid.neighbors(
         position,
         GridOrientation.Horizontal | GridOrientation.Vertical,
@@ -24,11 +20,14 @@ def check_neighbours(visited, level, position):
             continue
 
         if level + 1 == neighbour[0]:
-            check_neighbours(visited, neighbour[0], neighbour[1])
+            count += check_neighbours(grid, visited, neighbour[0], neighbour[1])
+
+    return count
 
 
-def part_one():
+def part_one(data):
     count = 0
+    grid = data
     visited = set()
 
     for item, position in grid:
@@ -37,18 +36,27 @@ def part_one():
             visited = set()
 
         if item == 0:
-            check_neighbours(visited, item, position)
+            check_neighbours(grid, visited, item, position)
 
     return count
 
 
-def part_two():
-    global count
+def part_two(data):
+    count = 0
+    grid = data
+    visited = set()
+
+    for item, position in grid:
+        if len(visited) > 0:
+            visited = set()
+
+        if item == 0:
+            count += check_neighbours(grid, visited, item, position)
 
     return count
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

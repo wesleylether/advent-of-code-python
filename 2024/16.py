@@ -2,16 +2,14 @@ import heapq
 from collections import namedtuple
 from functools import lru_cache
 
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    grid = Grid.from_string(input_file)
+def parse(data):
+    grid = Grid.from_string(data)
     start_pos = grid.search("S")
     end_pos = grid.search("E")
     return grid, start_pos, end_pos
@@ -29,8 +27,8 @@ def heuristic(pos, end_pos):
 
 
 @lru_cache(None)
-def part_one():
-    grid, pos, end_pos = parse_input()
+def part_one(data):
+    grid, pos, end_pos = data
 
     visited = set()
     priority_queue = []
@@ -70,10 +68,10 @@ def part_one():
     raise RuntimeError("No path found")
 
 
-def part_two():
-    best_score = part_one()
+def part_two(data):
+    best_score = part_one(data)
 
-    grid, pos, end_pos = parse_input()
+    grid, pos, end_pos = data
 
     visited = {}
     spots = set()
@@ -120,5 +118,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

@@ -1,15 +1,13 @@
 from collections import defaultdict
 from functools import lru_cache
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return list(map(int, input_file.splitlines()))
+def parse(data):
+    return list(map(int, data.splitlines()))
 
 
 @lru_cache(None)
@@ -23,16 +21,14 @@ def evolve(secret: int) -> int:
     return secret
 
 
-def part_one():
-    data = parse_input()
+def part_one(data):
     for _ in range(2000):
         data = [evolve(x) for x in data]
 
     return sum(data)
 
 
-def part_two():
-    data = parse_input()
+def part_two(data):
     values = defaultdict(int)
 
     for value in data:
@@ -59,5 +55,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

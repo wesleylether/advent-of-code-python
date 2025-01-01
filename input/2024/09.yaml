@@ -1,0 +1,7 @@
+part_one:
+    -   data: &data '2333133121414131402'
+        answer: 1928
+
+part_two:
+    -   data: *data
+        answer: 2858

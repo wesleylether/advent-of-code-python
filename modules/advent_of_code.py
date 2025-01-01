@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 
 import requests
+import yaml
 from colorama import Fore
 from dotenv import load_dotenv
 
@@ -13,32 +14,71 @@ load_dotenv()
 timer = Timer()
 
 
-def solve_one(func, *args, **kwargs):
+def test(year, day, func, parse_func=None):
+    part_name = func.__name__
+    tests = get_test_data(year, day, part_name)
+
+    for test in tests:
+        args = test.get("args", [])
+        kwargs = test.get("kwargs", {})
+        timer.start_timer()
+        if parse_func is None:
+            parsed = test["data"]
+        else:
+            parsed = parse_func(test["data"], *args, **kwargs)
+
+        answer = func(parsed, *args, **kwargs)
+        if isinstance(answer, tuple):
+            test_answer = answer[-1]
+        else:
+            test_answer = answer
+        assert test_answer == test["answer"], print(
+            Fore.RED + f"Expected {answer}, got {test["answer"]}" + Fore.RESET
+        )
+
+        print_title(year, day, part_name.replace("part_", "Test ").title(), Fore.GREEN)
+        print_data(answer)
+
+
+def solve(func, parse_func=None, *args, **kwargs):
+    year, day = get_year_and_day()
+    data = get_data(year, day)
+
+    test(year, day, func, parse_func)
+
     timer.start_timer()
-    print(Fore.WHITE + f"Part 1: " + Fore.GREEN + f"{func(*args, **kwargs)}" + Fore.RESET)
-    timer.end_timer()
+    if parse_func is None:
+        parsed = data
+    else:
+        parsed = parse_func(data, *args, **kwargs)
+    answer = func(parsed, *args, **kwargs)
+
+    print_title(year, day, func.__name__.replace("part_", "Part ").title())
+    print_data(answer)
 
 
-def solve_two(func, *args, **kwargs):
-    timer.start_timer()
-    print(Fore.WHITE + f"Part 2: " + Fore.GREEN + f"{func(*args, **kwargs)}" + Fore.RESET)
-    timer.end_timer()
+def print_title(year, day, title, color=Fore.CYAN):
+    print(color + f"{year} • {day} • {title}: " + Fore.RESET)
 
 
-def get_input(example=False):
-    caller_frame = inspect.stack()[1]
-    caller_file = caller_frame.filename
-    caller_path = Path(caller_file).resolve()
+def print_data(data):
+    if isinstance(data, tuple):
+        for i, p in enumerate(data):
+            if i == len(data) - 1:
+                print(f"{p}" + Fore.WHITE + f" - {timer.end_timer()}\n" + Fore.RESET)
+            else:
+                print(p)
+    else:
+        print(f"{data}" + Fore.WHITE + f" - {timer.end_timer()}\n" + Fore.RESET)
 
-    year = caller_path.parent.name
-    day_file = caller_path.stem
 
-    input_file = Path(f"../input/{year}/{day_file}{"-example" if example else ""}.txt")
+def get_data(year, day):
+    input_file = Path(f"../input/{year}/{day}.txt")
 
     if not input_file.exists():
         print(f"Inputbestand {input_file} bestaat niet. Downloaden...")
 
-        url = f"https://adventofcode.com/{year}/day/{int(day_file)}/input"
+        url = f"https://adventofcode.com/{year}/day/{int(day)}/input"
 
         headers = {"Cookie": f"session={os.getenv('SESSION')}"}
         response = requests.get(url, headers=headers)
@@ -53,3 +93,29 @@ def get_input(example=False):
 
     with open(input_file, "r") as f:
         return f.read()
+
+
+def get_test_data(year, day, part):
+    file = Path(f"../input/{year}/{day}.yaml")
+
+    if not file.exists():
+        return []
+
+    with open(file, "r") as f:
+        data = yaml.safe_load(f)
+
+        if part not in data:
+            return []
+
+        return data[part]
+
+
+def get_year_and_day():
+    caller_frame = inspect.stack()[2]
+    caller_file = caller_frame.filename
+    caller_path = Path(caller_file).resolve()
+
+    year = caller_path.parent.name
+    day = caller_path.stem
+
+    return year, day

@@ -1,20 +1,18 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
+from modules.advent_of_code import solve
 from modules.enums import Direction
 from modules.grid import Grid
-
-input_file = get_input()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return Grid.from_string(input_file)
+def parse(data):
+    return Grid.from_string(data)
 
 
-def part_one():
+def part_one(data):
     count = 0
     valid_range = ["M", "A", "S"]
-    grid = parse_input()
+    grid = data
     for letter, position in grid:
         if letter == "X":
             for direction in Direction:
@@ -35,9 +33,9 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    grid = parse_input()
+    grid = data
     for letter, position in grid:
         if letter == "A":
             try:
@@ -65,5 +63,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

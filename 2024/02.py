@@ -1,12 +1,11 @@
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
+from modules.list import List
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return [list(map(int, line.split())) for line in input_file.splitlines()]
+def parse(data):
+    return [List(map(int, line.split())) for line in data.splitlines()]
 
 
 def check_numbers(nums):
@@ -18,18 +17,18 @@ def check_numbers(nums):
     return False
 
 
-def part_one():
+def part_one(data):
     count = 0
-    for numbers in parse_input():
+    for numbers in data:
         if check_numbers(numbers):
             count += 1
 
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    for numbers in parse_input():
+    for numbers in data:
         if check_numbers(numbers):
             count += 1
             continue
@@ -45,5 +44,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

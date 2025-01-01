@@ -1,0 +1,3 @@
+part_one:
+    -   data: '125 17'
+        answer: 55312

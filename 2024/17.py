@@ -1,24 +1,21 @@
 import re
-
 import numpy as np
 
-from modules.advent_of_code import solve_one, solve_two, get_input
-
-input_file = get_input()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    lines = input_file.splitlines()
+def parse(data):
+    lines = data.splitlines()
     a, b, c = (int(re.search(r"\d+", line).group()) for line in lines[:3])
-    program = map(int, re.findall(r"\d+", lines[4]))
+    program = list(map(int, re.findall(r"\d+", lines[4])))
 
-    return a, b, c, *program
+    return a, b, c, program
 
 
-def part_one():
-    a, b, c, *program = parse_input()
+def part_one(data):
+    a, b, c, program = data
     instruction_pointer = 0
 
     def operand(n):
@@ -59,8 +56,8 @@ def part_one():
     return ",".join(map(str, output))
 
 
-def part_two():
-    a, b, c, *program = parse_input()
+def part_two(data):
+    a, b, c, program = data
     instructions = []
     found_jump = False
     for opcode, operand in np.array_split(program, len(program) // 2):
@@ -103,5 +100,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)
