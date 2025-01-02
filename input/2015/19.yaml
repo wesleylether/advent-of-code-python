@@ -1,0 +1,35 @@
+part_one:
+    -   data: |
+            H => HO
+            H => OH
+            O => HH
+            
+            HOH
+        answer: 4
+    -   data: |
+            H => HO
+            H => OH
+            O => HH
+            
+            HOHOHO
+        answer: 7
+
+part_two:
+    -   data: |
+            e => H
+            e => O
+            H => HO
+            H => OH
+            O => HH
+            
+            HOH
+        answer: 3
+    -   data: |
+            e => H
+            e => O
+            H => HO
+            H => OH
+            O => HH
+            
+            HOHOHO
+        answer: 6

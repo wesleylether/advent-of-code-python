@@ -1,21 +1,14 @@
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file.splitlines()
-
-
-def part_one():
+def part_one(data, total_time):
     count = 0
-    for line in parse_input():
+    for line in data.splitlines():
         speed, fly_time, rest_time = map(int, re.findall(r"\d+", line))
-        total_time = 2503
         cycle_time = fly_time + rest_time
         full_cycles = total_time // cycle_time
         remaining_time = total_time % cycle_time
@@ -26,9 +19,9 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data, total_time):
     reindeer = {}
-    for line in parse_input():
+    for line in data.splitlines():
         name = re.match(r"^(\w+)", line).group(1)
         speed, fly_time, rest_time = map(int, re.findall(r"\d+", line))
         reindeer[name] = {
@@ -40,7 +33,6 @@ def part_two():
             "fly": True,
             "time": fly_time,
         }
-    total_time = 2503
     while total_time:
         total_time -= 1
         for name, data in reindeer.items():
@@ -61,5 +53,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, None, 2503)
+solve(part_two, None, 2503)

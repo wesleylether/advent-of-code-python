@@ -1,14 +1,9 @@
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
-
+from modules.advent_of_code import solve
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file
 
 
 def check_password(password):
@@ -38,16 +33,21 @@ def increment_password(password):
     return "".join(password)
 
 
-def part_one():
-    password = parse_input()
+results_part_one = None
+
+
+def part_one(data):
+    global results_part_one
+    password = data
     while not check_password(password):
         password = increment_password(password)
 
+    results_part_one = password
     return password
 
 
-def part_two():
-    password = increment_password(part_one())
+def part_two(_):
+    password = increment_password(results_part_one)
     while not check_password(password):
         password = increment_password(password)
 
@@ -56,5 +56,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one)
+solve(part_two)

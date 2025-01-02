@@ -1,0 +1,17 @@
+part_one:
+    -   data: &data |
+            .#.#.#
+            ...##.
+            #....#
+            ..#...
+            #.#..#
+            ####..
+        answer: 4
+        kwargs:
+            steps: 4
+
+part_two:
+    -   data: *data
+        answer: 17
+        kwargs:
+            steps: 5

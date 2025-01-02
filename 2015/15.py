@@ -3,18 +3,16 @@ from enum import Enum
 from functools import reduce
 from operator import mul
 
-from modules.advent_of_code import solve_one, solve_two, get_data
+from modules.advent_of_code import solve
 from modules.helpers import generate_number_distributions
-
-input_file = get_data()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data):
     ingredients = {}
 
-    for i, line in enumerate(input_file.splitlines()):
+    for i, line in enumerate(data.splitlines()):
         properties = re.findall(r"-?\d+", line)
         ingredients[i] = list(map(int, properties))
     return ingredients
@@ -28,9 +26,9 @@ class Properties(Enum):
     calories = 4
 
 
-def part_one():
+def part_one(data):
     count = 0
-    ingredients = parse_input()
+    ingredients = data
     for combination in generate_number_distributions(100, len(ingredients)):
         values = {}
         for index, combination_value in enumerate(combination):
@@ -53,9 +51,9 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    ingredients = parse_input()
+    ingredients = data
     for combination in generate_number_distributions(100, len(ingredients)):
         values = {}
         for index, combination_value in enumerate(combination):
@@ -76,5 +74,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

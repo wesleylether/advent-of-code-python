@@ -1,16 +1,14 @@
 import re
 from itertools import permutations
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data):
     directions = {}
-    for direction in input_file.splitlines():
+    for direction in data.splitlines():
         match = re.match(r"(\w+) to (\w+) = (\d+)", direction)
         if match:
             start, end, distance = match.groups()
@@ -33,8 +31,8 @@ def calculate_route_distance(route, directions):
     return total_distance
 
 
-def part_one():
-    directions, cities = parse_input()
+def part_one(data):
+    directions, cities = data
 
     shortest_distance = float("inf")
     for route in permutations(cities):
@@ -45,8 +43,8 @@ def part_one():
     return shortest_distance
 
 
-def part_two():
-    directions, cities = parse_input()
+def part_two(data):
+    directions, cities = data
 
     longest_distance = float("-inf")
     for route in permutations(cities):
@@ -59,5 +57,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

@@ -1,19 +1,13 @@
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file.split()
-
-
-def part_one():
+def part_one(data):
     count = 0
-    for string in parse_input():
+    for string in data.split():
         vowels = re.findall(r"[aeiou]", string)
         if len(vowels) < 3:
             continue
@@ -26,9 +20,9 @@ def part_one():
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    for string in parse_input():
+    for string in data.split():
         if re.search(r"(..).*\1", string) and re.search(r"(.).\1", string):
             count += 1
 
@@ -37,5 +31,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one)
+solve(part_two)

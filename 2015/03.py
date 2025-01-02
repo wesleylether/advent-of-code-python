@@ -1,19 +1,13 @@
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return enumerate(input_file)
-
-
-def part_one():
+def part_one(data):
     x, y = 0, 0
     houses1 = set()
     houses1.add((x, y))
-    for i, d in parse_input():
+    for i, d in enumerate(data):
         match d:
             case "^":
                 y += 1
@@ -29,13 +23,13 @@ def part_one():
     return len(houses1)
 
 
-def part_two():
+def part_two(data):
     x1, y1 = 0, 0
     x2, y2 = 0, 0
     houses2 = set()
     houses2.add((0, 0))
 
-    for i, d in parse_input():
+    for i, d in enumerate(data):
         if i % 2 == 0:
             match d:
                 case "^":
@@ -66,5 +60,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one)
+solve(part_two)

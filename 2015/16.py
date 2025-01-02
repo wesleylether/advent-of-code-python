@@ -1,13 +1,11 @@
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data):
     MFCSAM = {
         "children": 3,
         "cats": 7,
@@ -23,7 +21,7 @@ def parse_input():
 
     pattern = re.compile(r"(\w+): (\d+)")
     parse_line = lambda line: [(n, int(v)) for n, v in re.findall(pattern, line)]
-    data = list(map(parse_line, input_file.splitlines()))
+    data = list(map(parse_line, data.splitlines()))
 
     return data, MFCSAM
 
@@ -31,14 +29,14 @@ def parse_input():
 solve = lambda data, func: next(i for i, line in enumerate(data, 1) if all(func(*p) for p in line))
 
 
-def part_one():
-    data, scan_data = parse_input()
+def part_one(data):
+    data, scan_data = data
 
     return solve(data, lambda name, val: val == scan_data[name])
 
 
-def part_two():
-    data, scan_data = parse_input()
+def part_two(data):
+    data, scan_data = data
 
     return solve(
         data,
@@ -56,5 +54,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

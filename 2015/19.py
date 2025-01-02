@@ -5,17 +5,15 @@ from collections import defaultdict, Counter, deque
 from copy import deepcopy
 from math import gcd
 
-from modules.advent_of_code import solve_one, solve_two, get_data
+from modules.advent_of_code import solve
 from modules.grid import Grid
 from modules.helpers import dd, ddd, pp
-
-input_file = get_data()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    lines, molecule = input_file.split("\n\n")
+def parse(data):
+    lines, molecule = data.split("\n\n")
     replacements = defaultdict(list)
     for r_key, r_replacement in [l.split(" => ") for l in lines.split("\n")]:
         replacements[r_key].append(r_replacement)
@@ -24,8 +22,8 @@ def parse_input():
     return molecule, replacements.items()
 
 
-def part_one():
-    molecule, replacements = parse_input()
+def part_one(data):
+    molecule, replacements = data
     results = set()
     for key, values in replacements:
         for value in values:
@@ -35,9 +33,9 @@ def part_one():
     return len(results)
 
 
-def part_two():
+def part_two(data):
     count = 0
-    molecule, replacements = parse_input()
+    molecule, replacements = data
 
     reverse_replacements = []
     for key, values in replacements:
@@ -67,5 +65,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

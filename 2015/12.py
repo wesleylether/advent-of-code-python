@@ -1,26 +1,20 @@
 import json
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file
-
-
-def part_one():
+def part_one(data):
     count = 0
-    for n in re.findall(r"-?\d+", parse_input()):
+    for n in re.findall(r"-?\d+", data):
         count += int(n)
 
     return count
 
 
-def part_two():
+def part_two(data):
     def loop_json_items(data, count):
         if isinstance(data, dict):
             if "red" in data.values():
@@ -39,10 +33,10 @@ def part_two():
 
         return count
 
-    return loop_json_items(json.loads(parse_input()), 0)
+    return loop_json_items(json.loads(data), 0)
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one)
+solve(part_two)

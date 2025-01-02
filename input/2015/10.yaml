@@ -1,0 +1,4 @@
+part_one:
+    -   data: '1'
+        answer: 6
+        args: [5]

@@ -1,8 +1,11 @@
 part_one:
-    -   data: &data |
-            a
+    -   data: (())
         answer: 0
+    -   data: (()(()(
+        answer: 3
+    -   data: )())())
+        answer: -3
 
 part_two:
-    -   data: *data
-        answer: 0
+    -   data: ()())
+        answer: 5

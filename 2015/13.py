@@ -2,22 +2,20 @@ import re
 from collections import defaultdict
 from itertools import permutations
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
+def parse(data):
     people = set()
     happiness = defaultdict(dict)
 
-    for line in input_file.splitlines():
-        data = re.findall(
+    for line in data.splitlines():
+        d = re.findall(
             r"(\w+) would (gain|lose) (\d+) happiness units by sitting next to (\w+).", line
         )[0]
-        person1, sign, value, person2 = data
+        person1, sign, value, person2 = d
         value = int(value) if sign == "gain" else -int(value)
 
         people.add(person1)
@@ -39,14 +37,14 @@ def calculate_happiness(people, happiness):
     return max_happiness
 
 
-def part_one():
-    people, happiness = parse_input()
+def part_one(data):
+    people, happiness = data
 
     return calculate_happiness(people, happiness)
 
 
-def part_two():
-    people, happiness = parse_input()
+def part_two(data):
+    people, happiness = data
 
     for person in people:
         happiness["me"][person] = 0
@@ -58,5 +56,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

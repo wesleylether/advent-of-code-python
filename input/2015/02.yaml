@@ -1,0 +1,11 @@
+part_one:
+    -   data: &data1 2x3x4
+        answer: 58
+    -   data: &data2 1x1x10
+        answer: 43
+
+part_two:
+    -   data: *data1
+        answer: 34
+    -   data: *data2
+        answer: 14

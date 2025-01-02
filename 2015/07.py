@@ -1,19 +1,17 @@
 from functools import lru_cache
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    data = {}
-    for command in input_file.splitlines():
+def parse(data):
+    d = {}
+    for command in data.splitlines():
         signals, wire = command.split("->")
-        data[wire.strip()] = signals.strip().split(" ")
+        d[wire.strip()] = signals.strip().split(" ")
 
-    return data
+    return d
 
 
 def calculate(name, instructions, results: dict):
@@ -51,16 +49,20 @@ def calculate(name, instructions, results: dict):
     return results[name]
 
 
-@lru_cache(None)
-def part_one():
-    return calculate("a", parse_input(), {})
+results_part_one = None
 
 
-def part_two():
-    return calculate("a", parse_input(), {"b": part_one()})
+def part_one(data):
+    global results_part_one
+    results_part_one = calculate("a", data, {})
+    return results_part_one
+
+
+def part_two(data):
+    return calculate("a", data, {"b": results_part_one})
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

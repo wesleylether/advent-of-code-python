@@ -1,0 +1,11 @@
+part_one:
+    -   data: &data |
+            ""
+            "abc"
+            "aaa\"aaa"
+            "\x27"
+        answer: 12
+
+part_two:
+    -   data: *data
+        answer: 19

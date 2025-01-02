@@ -1,14 +1,8 @@
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file
-
-
 def look_and_say(sequence):
     result = ""
     i = 0
@@ -22,21 +16,21 @@ def look_and_say(sequence):
     return result
 
 
-def part_one():
-    count = input_file
-    for _ in range(40):
+def part_one(data, steps):
+    count = data
+    for _ in range(steps):
         count = look_and_say(count)
     return len(count)
 
 
-def part_two():
-    count = input_file
-    for _ in range(50):
+def part_two(data, steps):
+    count = data
+    for _ in range(steps):
         count = look_and_say(count)
     return len(count)
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, None, 40)
+solve(part_two, None, 50)

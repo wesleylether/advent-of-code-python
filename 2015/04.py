@@ -1,20 +1,14 @@
 import hashlib
 
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file
-
-
-def calculate_hash(value):
+def calculate_hash(data, value):
     count = 0
     while True:
-        hash_value = hashlib.md5(f"{input_file}{count}".encode()).hexdigest()
+        hash_value = hashlib.md5(f"{data}{count}".encode()).hexdigest()
         if hash_value.startswith(value):
             break
         count += 1
@@ -22,15 +16,15 @@ def calculate_hash(value):
     return count
 
 
-def part_one():
-    return calculate_hash("00000")
+def part_one(data):
+    return calculate_hash(data, "00000")
 
 
-def part_two():
-    return calculate_hash("000000")
+def part_two(data):
+    return calculate_hash(data, "000000")
 
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one)
+solve(part_two)

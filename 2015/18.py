@@ -1,19 +1,17 @@
-from modules.advent_of_code import solve_two, get_data, solve_one
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-input_file = get_data()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return Grid.from_string(input_file)
+def parse(data, **_):
+    return Grid.from_string(data)
 
 
-def part_one():
-    grid = parse_input()
+def part_one(data, steps):
+    grid = data
 
-    for _ in range(100):
+    for _ in range(steps):
         new_grid = Grid(grid.width, grid.height, ".")
         for v, pos in grid:
             neighbors = grid.adjacent(pos)
@@ -27,14 +25,14 @@ def part_one():
     return grid.count_value("#")
 
 
-def part_two():
-    grid = parse_input()
+def part_two(data, steps):
+    grid = data
     grid[0, 0] = "#"
     grid[0, grid.height - 1] = "#"
     grid[grid.width - 1, 0] = "#"
     grid[grid.width - 1, grid.height - 1] = "#"
 
-    for _ in range(100):
+    for _ in range(steps):
         new_grid = Grid(grid.width, grid.height, ".")
         for v, pos in grid:
             if pos in [
@@ -59,5 +57,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse, steps=100)
+solve(part_two, parse, steps=100)

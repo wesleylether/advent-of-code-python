@@ -1,26 +1,24 @@
 import re
 
-from modules.advent_of_code import solve_one, solve_two, get_data
+from modules.advent_of_code import solve
 from modules.grid import Grid
-
-input_file = get_data()
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    data = []
-    for line in input_file.splitlines():
+def parse(data):
+    d = []
+    for line in data.splitlines():
         action = re.findall(r"toggle|turn on|turn off", line)[0]
         x1, y1, x2, y2 = map(int, re.findall(r"\d+", line))
-        data.append((action, x1, y1, x2, y2))
+        d.append((action, x1, y1, x2, y2))
 
-    return data
+    return d
 
 
-def part_one():
+def part_one(data):
     grid = Grid(1000, 1000, 0)
-    for action, x1, y1, x2, y2 in parse_input():
+    for action, x1, y1, x2, y2 in data:
         for x in range(x1, x2 + 1):
             for y in range(y1, y2 + 1):
                 if action == "toggle":
@@ -33,9 +31,9 @@ def part_one():
     return grid.count_value(1)
 
 
-def part_two():
+def part_two(data):
     grid = Grid(1000, 1000, 0)
-    for action, x1, y1, x2, y2 in parse_input():
+    for action, x1, y1, x2, y2 in data:
         for x in range(x1, x2 + 1):
             for y in range(y1, y2 + 1):
                 if action == "toggle":
@@ -50,5 +48,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one, parse)
+solve(part_two, parse)

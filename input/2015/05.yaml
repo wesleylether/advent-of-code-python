@@ -1,0 +1,16 @@
+part_one:
+    -   data: |
+            ugknbfddgicrmopn
+            aaa
+            jchzalrnumimnmhp
+            haegwjzuvuyypxyu
+            dvszwmarrgswjxmb
+        answer: 2
+
+part_two:
+    -   data: |
+            qjhvhtzxzqqjkmpb
+            xxyxx
+            uurcxstgmygtbstg
+            ieodomkazucvgmuy
+        answer: 2

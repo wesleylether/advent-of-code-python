@@ -1,0 +1,14 @@
+part_one:
+    -   data: &data |
+            20
+            15
+            10
+            5
+            5
+        answer: 4
+        args: [25]
+
+part_two:
+    -   data: *data
+        answer: 3
+        args: [25]

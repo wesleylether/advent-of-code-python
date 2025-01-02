@@ -1,0 +1,5 @@
+part_one:
+    -   data: abcdef
+        answer: 609043
+    -   data: pqrstuv
+        answer: 1048970

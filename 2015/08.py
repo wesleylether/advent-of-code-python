@@ -1,25 +1,19 @@
-from modules.advent_of_code import solve_one, solve_two, get_data
-
-input_file = get_data()
+from modules.advent_of_code import solve
 
 
 # Start coding here
 # ==========================================================================
-def parse_input():
-    return input_file.splitlines()
-
-
-def part_one():
+def part_one(data):
     count = 0
-    for line in parse_input():
+    for line in data.splitlines():
         count += len(line) - len(eval(line))
 
     return count
 
 
-def part_two():
+def part_two(data):
     count = 0
-    for line in parse_input():
+    for line in data.splitlines():
         count += len(line.replace("\\", "\\\\").replace('"', '\\"')) - len(line) + 2
 
     return count
@@ -27,5 +21,5 @@ def part_two():
 
 # Answers
 # ==========================================================================
-solve_one(part_one)
-solve_two(part_two)
+solve(part_one)
+solve(part_two)
