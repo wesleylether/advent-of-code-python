@@ -1,0 +1,8 @@
+part_one:
+    -   data: |
+            inc a
+            jio a, +2
+            tpl a
+            inc a
+        answer: 2
+        args: ['a']

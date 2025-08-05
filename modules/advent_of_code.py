@@ -89,7 +89,9 @@ def get_data(year, day):
             with open(input_file, "w") as f:
                 f.write(response.text.strip())
         else:
-            raise Exception(f"Fout bij het downloaden van inputbestand: {response.status_code}")
+            raise Exception(
+                f"Fout bij het downloaden van inputbestand: {response.status_code}"
+            )
 
     with open(input_file, "r") as f:
         return f.read()

@@ -1,18 +1,11 @@
 import re
-import time
-from collections import defaultdict, Counter, deque
-from copy import deepcopy
 from enum import Enum
 from itertools import combinations
-from math import gcd
-from typing import List as PyList, Optional
+from typing import List as PyList
 
 from pydantic import BaseModel, Field
 
 from modules.advent_of_code import solve
-from modules.grid import Grid
-from modules.helpers import dd, ddd, pp
-from modules.list import List
 
 
 class ItemType(str, Enum):
