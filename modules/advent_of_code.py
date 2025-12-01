@@ -7,6 +7,7 @@ import yaml
 from colorama import Fore
 from dotenv import load_dotenv
 
+from modules.helpers import get_root
 from modules.timer import Timer
 
 load_dotenv()
@@ -72,9 +73,8 @@ def print_data(data):
         print(f"{data}" + Fore.WHITE + f" - {timer.end_timer()}\n" + Fore.RESET)
 
 
-def get_data(year, day):
-    input_file = Path(f"../input/{year}/{day}.txt")
-
+def get_data(year, day) -> str | None:
+    input_file = get_root() / "input" / str(year) / f"{day}.txt"
     if not input_file.exists():
         print(f"Inputbestand {input_file} bestaat niet. Downloaden...")
 
@@ -98,7 +98,7 @@ def get_data(year, day):
 
 
 def get_test_data(year, day, part):
-    file = Path(f"../input/{year}/{day}.yaml")
+    file = get_root() / "input" / str(year) / f"{day}.yaml"
 
     if not file.exists():
         return []

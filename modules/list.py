@@ -1,7 +1,7 @@
 import operator
 from collections import UserList
 from functools import reduce
-from itertools import starmap, accumulate
+from itertools import starmap, accumulate, combinations, permutations
 from math import prod
 
 from typing import TypeVar, Generic, Iterator
@@ -114,3 +114,12 @@ class List(Generic[T], UserList[T]):
 
     def transpose(self) -> "List[T]":
         return List(zip(*self)).map(List)
+
+    def reverse(self) -> "List[T]":
+        return List(reversed(self))
+
+    def permutations(self, r: int) -> "List[List[T]]":
+        return List([List(i) for i in permutations(self, r)])
+
+    def combinations(self, r: int) -> "List[List[T]]":
+        return List([List(i) for i in combinations(self, r)])

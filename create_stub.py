@@ -1,13 +1,17 @@
+import argparse
 import os
 import sys
+from datetime import datetime
+
+from modules.advent_of_code import get_data
 
 
-def create_stub(year, day):
+def create_stub(year: int, day: int, create_test_yaml=False):
     create_directories(year)
 
     puzzle_file = f"{year}/{day:02d}.py"
 
-    create_file(
+    if create_file(
         """import re
 import time
 from collections import defaultdict, Counter, deque
@@ -42,15 +46,19 @@ def part_two(data):
 # Answers
 # ==========================================================================
 solve(part_one, parse)
-solve(part_two, parse)
+# solve(part_two, parse)
 """,
         puzzle_file,
-    )
+    ):
+        print(f"Puzzle File {puzzle_file} created successfully.")
 
-    test_file = f"input/{year}/{day:02d}.yaml"
+    get_data(year, day)
 
-    create_file(
-        """part_one:
+    if create_test_yaml:
+        test_file = f"input/{year}/{day:02d}.yaml"
+
+        if create_file(
+            """part_one:
     -   data: &data |
             <example>
         answer: 0
@@ -67,10 +75,9 @@ part_two:
         # kwargs:
         #     key: value
 """,
-        test_file,
-    )
-
-    print(f"Files {puzzle_file} and {test_file} created successfully.")
+            test_file,
+        ):
+            print(f"Test yaml file {puzzle_file} created successfully.")
 
 
 def create_directories(year):
@@ -83,17 +90,21 @@ def create_directories(year):
         os.makedirs(test_directory)
 
 
-def create_file(content, filename):
+def create_file(content, filename) -> bool:
     if os.path.exists(filename):
         print(f"File {filename} already exists.")
-        return
+        return False
 
     with open(filename, "w") as file:
         file.write(content)
 
+    return True
+
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: create <year> <day>")
-    else:
-        create_stub(int(sys.argv[1]), int(sys.argv[2]))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--year", default=datetime.now().year)
+    parser.add_argument("--day", default=datetime.now().day)
+    parser.add_argument("--test", action="store_true")
+    args = parser.parse_args()
+    create_stub(int(args.year), int(args.day), bool(args.test))
