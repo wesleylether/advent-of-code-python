@@ -73,8 +73,8 @@ def print_data(data):
         print(f"{data}" + Fore.WHITE + f" - {timer.end_timer()}\n" + Fore.RESET)
 
 
-def get_data(year, day) -> str | None:
-    input_file = get_root() / "input" / str(year) / f"{day}.txt"
+def get_data(year: int, day: int) -> str | None:
+    input_file = get_root() / "input" / str(year) / f"{day:02d}.txt"
     if not input_file.exists():
         print(f"Inputbestand {input_file} bestaat niet. Downloaden...")
 
@@ -98,7 +98,7 @@ def get_data(year, day) -> str | None:
 
 
 def get_test_data(year, day, part):
-    file = get_root() / "input" / str(year) / f"{day}.yaml"
+    file = get_root() / "input" / str(year) / f"{day:02d}.yaml"
 
     if not file.exists():
         return []
@@ -120,4 +120,4 @@ def get_year_and_day():
     year = caller_path.parent.name
     day = caller_path.stem
 
-    return year, day
+    return int(year), int(day)

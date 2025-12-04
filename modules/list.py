@@ -80,10 +80,10 @@ class List(Generic[T], UserList[T]):
         return prod(self, start=initial)  # type: ignore
 
     def min(self):
-        pass
+        return min(self)
 
     def max(self):
-        pass
+        return max(self)
 
     def mean(self):
         pass
