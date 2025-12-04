@@ -3,6 +3,7 @@ from collections import UserList
 from functools import reduce
 from itertools import starmap, accumulate, combinations, permutations
 from math import prod
+from statistics import median
 
 from typing import TypeVar, Generic, Iterator
 
@@ -86,13 +87,10 @@ class List(Generic[T], UserList[T]):
         return max(self)
 
     def mean(self):
-        pass
+        return self.sum() / len(self)
 
     def median(self):
-        pass
-
-    def mode(self):
-        pass
+        return median(self)
 
     def flatten(self) -> "List[T]":
         return List(
@@ -103,14 +101,10 @@ class List(Generic[T], UserList[T]):
             )
         )
 
-    def deepcopy(self):
-        pass
+    def deepcopy(self) -> "List[T]":
+        from copy import deepcopy
 
-    def nlargest(self, n: int) -> "List[T]":
-        pass
-
-    def nsmallest(self, n: int) -> "List[T]":
-        pass
+        return List(deepcopy(self.data))
 
     def transpose(self) -> "List[T]":
         return List(zip(*self)).map(List)
