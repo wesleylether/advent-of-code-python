@@ -62,6 +62,9 @@ class List(Generic[T], UserList[T]):
     def chunk(self, size: int) -> "List[List[T]]":
         return List([self[i : i + size] for i in range(0, len(self), size)])
 
+    def unique(self) -> "List[T]":
+        return List(set(self))
+
     def accumulate(self, func=operator.add, initial=_SENTINEL) -> "List[T]":
         if initial is self._SENTINEL:
             return List(accumulate(self, func))
@@ -74,7 +77,7 @@ class List(Generic[T], UserList[T]):
 
         return sum(self, initial)  # type: ignore
 
-    def prod(self, initial=_SENTINEL) -> int:
+    def product(self, initial=_SENTINEL) -> int:
         if initial is self._SENTINEL:
             return prod(self)
 

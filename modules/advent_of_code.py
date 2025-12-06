@@ -34,7 +34,7 @@ def test(year, day, func, parse_func=None):
         else:
             test_answer = answer
         assert test_answer == test["answer"], print(
-            Fore.RED + f"Expected {answer}, got {test["answer"]}" + Fore.RESET
+            Fore.RED + f"Expected {test["answer"]}, got {answer}" + Fore.RESET
         )
 
         print_title(year, day, part_name.replace("part_", "Test ").title(), Fore.GREEN)
