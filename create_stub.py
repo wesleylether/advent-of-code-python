@@ -12,7 +12,8 @@ def create_stub(year: int, day: int, create_test_yaml=False):
     puzzle_file = f"{year}/{day:02d}.py"
 
     if create_file(
-        """import re
+        """import heapq
+import re
 import time
 from collections import defaultdict, Counter, deque
 from copy import deepcopy
